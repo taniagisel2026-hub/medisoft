@@ -30,7 +30,7 @@ permitirRol('recepcionista');
       </button>
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="btn btn-light text-primary" href="#" id="logout">Cerrar sesión</a>
+          <a class="btn btn-light text-primary" href="cerrar_sesion.php" id="logout">Cerrar sesión</a>
         </li>
       </ul>
     </div>
@@ -42,9 +42,10 @@ permitirRol('recepcionista');
       <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6">
           <div class="form-container">
-            <h3>Registrar Usuario</h3>
+            <h3>Registrar Paciente</h3>
+            <p class="text-muted small">Registra a un paciente que llega directamente al mostrador.</p>
 
-            <form id="usuarioform" action="php/registrar_usuario.php" method="POST">
+            <form id="usuarioform" action="procesar_registro_paciente.php" method="POST">
             <!-- Tipo de identificación -->
             <div class="mb-3 input-icon-wrapper">
               <i class="fas fa-id-card fa-icon-left"></i>
@@ -94,10 +95,33 @@ permitirRol('recepcionista');
               <input type="number" class="form-control" name="telefono_usuario" placeholder="Teléfono" required />
             </div>
 
+            <!-- Fecha de nacimiento -->
+            <div class="mb-3 input-icon-wrapper">
+              <i class="fas fa-cake-candles fa-icon-left"></i>
+              <input type="date" class="form-control" name="fecha_nacimiento" required />
+            </div>
+
+            <!-- EPS -->
+            <div class="mb-3 input-icon-wrapper">
+              <i class="fas fa-notes-medical fa-icon-left"></i>
+              <input type="text" class="form-control" name="eps_paciente" placeholder="EPS" required />
+            </div>
+
+            <!-- Sexo -->
+            <div class="mb-3 input-icon-wrapper">
+              <i class="fas fa-venus-mars fa-icon-left"></i>
+              <select class="form-select" name="sexo" required>
+                <option selected disabled value="">Sexo</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+
             <!-- Contraseña -->
             <div class="mb-3 input-icon-wrapper">
               <i class="fas fa-lock fa-icon-left"></i>
-              <input type="password" class="form-control" id="password" name="Contrasena_usuario"
+              <input type="password" class="form-control" id="password" name="contrasena_usuario"
                 placeholder="Contraseña" autocomplete="new-password" required />
               <i class="fas fa-eye fa-icon-right" onclick="togglePassword('password', this)"></i>
             </div>
@@ -108,18 +132,6 @@ permitirRol('recepcionista');
               <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
                 placeholder="Confirmar contraseña" autocomplete="new-password" required />
               <i class="fas fa-eye fa-icon-right" onclick="togglePassword('confirmPassword', this)"></i>
-            </div>
-
-            <!-- Rol  -->
-            <div class="mb-3 input-icon-wrapper">
-              <i class="fas fa-user-shield fa-icon-left"></i>
-              <select class="form-select" name="rol_usuario" required>
-                <option selected disabled>Seleccione su rol</option>
-                <option value="admin">Administrador</option>
-                <option value="medico">Médico</option>
-                <option value="recepcionista">Recepcionista</option>
-                <option value="paciente">Paciente</option>
-              </select>
             </div>
 
             <!-- Botón -->

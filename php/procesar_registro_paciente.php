@@ -1,5 +1,12 @@
 <?php
+session_start();
 require "conexion.php";
+
+// Si lo registra un recepcionista logueado, lo devolvemos a su propio panel;
+// si es un visitante público registrándose por su cuenta, al sitio público.
+$esRecepcionista = ($_SESSION['rol'] ?? null) === 'recepcionista';
+$volverFormulario = $esRecepcionista ? 'registro_usuario.php' : 'registro_paciente.php';
+$volverExito = $esRecepcionista ? 'dashboard_recep.php' : '../index.html';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -31,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($checkDoc->num_rows > 0) {
         echo "<script>
             alert('❌ El número de documento ya está registrado');
-            window.location.href='registro_paciente.php';
+            window.location.href='{$volverFormulario}';
           </script>";
         exit();
     }
@@ -45,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($checkEmail->num_rows > 0) {
         echo "<script>
                 alert('❌ El correo ya está registrado');
-                window.location.href='registro_paciente.php';
+                window.location.href='{$volverFormulario}';
               </script>";
         exit();
     }
@@ -94,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     echo "<script>
             alert('✔ Paciente registrado con éxito');
-            window.location.href='../index.html';
+            window.location.href='{$volverExito}';
           </script>";
     exit();
 }
