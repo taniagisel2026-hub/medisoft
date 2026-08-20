@@ -64,8 +64,34 @@ body {
 }
 
 .form-wrapper {
-  height: calc(100vh - 72px);
+  min-height: calc(100vh - 72px);
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+.hora-btn {
+  border: 2px solid #0a4c84;
+  color: #0a4c84;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 0.4rem 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hora-btn:hover {
+  background-color: #e8f1fa;
+}
+
+.hora-btn.seleccionada {
+  background-color: #0a4c84;
+  color: #fff;
+}
+
+.hora-seleccionada-texto {
+  font-weight: 600;
+  color: #0a4c84;
 }

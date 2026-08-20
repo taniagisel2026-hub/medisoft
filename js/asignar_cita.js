@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const fechaInput = document.getElementById("fecha");
   const horasContenedor = document.getElementById("horasDisponibles");
   const horaInput = document.getElementById("hora");
+  const horaTexto = document.getElementById("horaSeleccionadaTexto");
 
   const hoy = new Date().toISOString().split("T")[0];
   fechaInput.min = hoy;
@@ -36,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function resetHoras() {
     horaInput.value = "";
+    horaTexto.textContent = "";
     horasContenedor.innerHTML = '<span class="text-muted small">Elige médico y fecha para ver las horas disponibles.</span>';
   }
 
@@ -58,12 +60,13 @@ document.addEventListener("DOMContentLoaded", function () {
         data.disponibles.forEach(hora => {
           const btn = document.createElement("button");
           btn.type = "button";
-          btn.className = "btn btn-outline-primary btn-sm";
+          btn.className = "hora-btn";
           btn.textContent = hora;
           btn.addEventListener("click", () => {
             horaInput.value = hora;
-            horasContenedor.querySelectorAll("button").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
+            horasContenedor.querySelectorAll(".hora-btn").forEach(b => b.classList.remove("seleccionada"));
+            btn.classList.add("seleccionada");
+            horaTexto.textContent = `Hora seleccionada: ${hora}`;
           });
           horasContenedor.appendChild(btn);
         });

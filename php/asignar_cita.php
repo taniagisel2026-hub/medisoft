@@ -25,7 +25,7 @@ $esRecepcionista = $_SESSION['rol'] === 'recepcionista';
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/asignar_cita.css" />
+  <link rel="stylesheet" href="../css/asignar_cita.css?v=2" />
   <link rel="icon"
     href="data:image/x-icon;base64,AAABAAEAEBAAAAAAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=">
 </head>
@@ -94,6 +94,7 @@ $esRecepcionista = $_SESSION['rol'] === 'recepcionista';
           <div id="horasDisponibles" class="d-flex flex-wrap gap-2 mb-2">
             <span class="text-muted small">Elige médico y fecha para ver las horas disponibles.</span>
           </div>
+          <div id="horaSeleccionadaTexto" class="hora-seleccionada-texto small"></div>
           <input type="hidden" name="hora" id="hora" required />
         </div>
 
