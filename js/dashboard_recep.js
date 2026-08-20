@@ -1,10 +1,3 @@
-const nombreUsuario = localStorage.getItem("usuario") || "Recepcionista";
-const rolUsuario = localStorage.getItem("rol") || "Empleado Recepcionista";
-
-document.getElementById("nombreUsuario").textContent = nombreUsuario;
-document.getElementById("rolUsuario").textContent = rolUsuario;
-document.getElementById("inicialUsuario").textContent = nombreUsuario.charAt(0).toUpperCase();
-
 const panel = document.getElementById("panelOpciones");
 
 const crearCard = (icono, titulo, descripcion, enlace) => `
@@ -23,7 +16,5 @@ panel.innerHTML += crearCard("fas fa-calendar-times", "Citas Agendadas", "Consul
 panel.innerHTML += crearCard("fas fa-user-plus", "Registrar Usuario", "Registra nuevos pacientes en el sistema.", "registro_usuario.php");
 
 document.getElementById("logout").addEventListener("click", () => {
-  localStorage.removeItem("usuario");
-  localStorage.removeItem("rol");
   window.location.href = "cerrar_sesion.php";
 });

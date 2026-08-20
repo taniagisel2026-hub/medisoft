@@ -46,10 +46,10 @@ if ($_SESSION['rol'] !== 'admin') {
   <!-- Perfil -->
   <div class="perfil-container mt-4">
     <div class="perfil-usuario">
-      <div class="inicial" id="inicialUsuario">A</div>
+      <div class="inicial" id="inicialUsuario"><?= strtoupper(substr($_SESSION['nombre'], 0, 1)) ?></div>
       <div class="nombre-usuario">
-        <p class="nombre" id="nombreUsuario">Administrador</p>
-        <p class="rol" id="rolUsuario">Administrador</p>
+        <p class="nombre" id="nombreUsuario"><?= htmlspecialchars($_SESSION['nombre']) ?></p>
+        <p class="rol" id="rolUsuario"><?= ucfirst($_SESSION['rol']) ?></p>
       </div>
     </div>
   </div>

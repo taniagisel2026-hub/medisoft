@@ -56,7 +56,7 @@ if (!isset($_SESSION['id']) || $_SESSION['rol'] !== 'recepcionista') {
       <div class="nombre-usuario">
         <!-- Nombre -->
         <p class="nombre" id="nombreUsuario">
-          <?= $_SESSION['nombre'] ?>
+          <?= htmlspecialchars($_SESSION['nombre']) ?>
         </p>
 
         <!-- Rol -->

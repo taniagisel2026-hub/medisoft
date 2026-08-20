@@ -57,15 +57,8 @@ if (!isset($_SESSION['id']) || $_SESSION['rol'] !== 'paciente') {
       </div>
 
       <div class="nombre-usuario">
-        <p class="nombre" id="nombreUsuario"
-           data-nombre="<?= $_SESSION['nombre'] ?>">
-          <?= $_SESSION['nombre'] ?>
-        </p>
-
-        <p class="rol" id="rolUsuario"
-           data-rol="<?= ucfirst($_SESSION['rol']) ?>">
-          <?= ucfirst($_SESSION['rol']) ?>
-        </p>
+        <p class="nombre" id="nombreUsuario"><?= htmlspecialchars($_SESSION['nombre']) ?></p>
+        <p class="rol" id="rolUsuario"><?= ucfirst($_SESSION['rol']) ?></p>
       </div>
 
     </div>

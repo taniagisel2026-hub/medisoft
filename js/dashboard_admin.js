@@ -1,12 +1,3 @@
-// Simulación de datos (vendrán del login real)
-const nombreUsuario = localStorage.getItem("usuario") || "Administrador";
-const rolUsuario = localStorage.getItem("rol") || "Administrador";
-
-// Mostrar datos del perfil
-document.getElementById("nombreUsuario").textContent = nombreUsuario;
-document.getElementById("rolUsuario").textContent = rolUsuario;
-document.getElementById("inicialUsuario").textContent = nombreUsuario.charAt(0).toUpperCase();
-
 // Contenedor de opciones
 const panel = document.getElementById("panelOpciones");
 
@@ -25,11 +16,10 @@ const crearCard = (icono, titulo, descripcion, enlace) => `
 // Opciones del administrador
 panel.innerHTML += crearCard("fas fa-user-md", "Registrar Empleado", "Agrega o edita datos del personal médico.", "registrar_empleado.php");
 panel.innerHTML += crearCard("fas fa-clinic-medical", "Registrar Consultorio", "Administra los consultorios disponibles.", "registrar_consultorio.php");
+panel.innerHTML += crearCard("fas fa-pills", "Registrar Medicamento", "Controla los medicamentos disponibles.", "registrar_medicamento.php");
 panel.innerHTML += crearCard("fas fa-users", "Registrar Usuario", "Gestiona los usuarios del sistema.", "registro_usuario.php");
 
 // Cerrar sesión
 document.getElementById("logout").addEventListener("click", () => {
-  localStorage.removeItem("usuario");
-  localStorage.removeItem("rol");
   window.location.href = "cerrar_sesion.php";
 });

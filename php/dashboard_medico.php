@@ -39,10 +39,10 @@ if ($_SESSION['rol'] !== 'medico') {
 
   <div class="perfil-container mt-4">
     <div class="perfil-usuario">
-      <div class="inicial" id="inicialUsuario">M</div>
+      <div class="inicial" id="inicialUsuario"><?= strtoupper(substr($_SESSION['nombre'], 0, 1)) ?></div>
       <div class="nombre-usuario">
-        <p class="nombre" id="nombreUsuario">Médico</p>
-        <p class="rol" id="rolUsuario">Empleado Médico</p>
+        <p class="nombre" id="nombreUsuario"><?= htmlspecialchars($_SESSION['nombre']) ?></p>
+        <p class="rol" id="rolUsuario"><?= ucfirst($_SESSION['rol']) ?></p>
       </div>
     </div>
   </div>
