@@ -27,7 +27,7 @@ if (!isset($_SESSION['id']) || $_SESSION['rol'] !== 'paciente') {
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
 
   <!-- CSS personalizado -->
-  <link rel="stylesheet" href="../css/dashboard.css?v=3" />
+  <link rel="stylesheet" href="../css/dashboard.css?v=4" />
 </head>
 <body>
 
