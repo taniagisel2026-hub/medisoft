@@ -3,12 +3,12 @@ const panel = document.getElementById("panelOpciones");
 
 // Función para crear tarjetas
 const crearCard = (icono, titulo, descripcion, enlace) => `
-  <div class="col-md-4">
+  <div class="col-md-6 col-lg-4">
     <div class="card">
       <i class="${icono} fa-2x"></i>
       <h5 class="mt-2">${titulo}</h5>
       <p>${descripcion}</p>
-      <a href="${enlace}" class="btn btn-custom btn-sm">Ir</a>
+      <a href="${enlace}" class="btn btn-custom">Ir</a>
     </div>
   </div>
 `;
