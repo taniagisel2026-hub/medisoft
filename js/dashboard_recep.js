@@ -19,7 +19,7 @@ const crearCard = (icono, titulo, descripcion, enlace) => `
 `;
 
 panel.innerHTML += crearCard("fas fa-calendar-plus", "Asignar Cita Médica", "Registra nuevas citas para pacientes.", "asignar_cita.php");
-panel.innerHTML += crearCard("fas fa-calendar-times", "Cancelar Cita Médica", "Gestiona cancelaciones de citas.", "cancelar_cita.html");
+panel.innerHTML += crearCard("fas fa-calendar-times", "Citas Agendadas", "Consulta o cancela citas de cualquier paciente.", "mis_citas.php");
 panel.innerHTML += crearCard("fas fa-user-plus", "Registrar Usuario", "Registra nuevos pacientes en el sistema.", "registro_usuario.php");
 
 document.getElementById("logout").addEventListener("click", () => {

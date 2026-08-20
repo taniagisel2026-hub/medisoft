@@ -34,7 +34,7 @@ permitirRol('admin');
 
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="btn btn-light text-primary" href="#" id="logout">Cerrar sesión</a>
+          <a class="btn btn-light text-primary" href="cerrar_sesion.php" id="logout">Cerrar sesión</a>
         </li>
       </ul>
     </div>
@@ -45,11 +45,11 @@ permitirRol('admin');
   <div class="form-wrapper">
     <div class="form-container">
       <h3>Registrar Consultorio</h3>
-      <form id="consultorioForm">
+      <form id="consultorioForm" action="guardar_consultorio.php" method="POST">
         <!-- Número de consultorio -->
         <div class="mb-3 input-icon-wrapper">
           <i class="fas fa-house-medical fa-icon-left"></i>
-          <input type="number" class="form-control" name="numero_consultorio" id="numero_consultorio"
+          <input type="number" class="form-control" name="numero" id="numero_consultorio"
             placeholder="Número de consultorio" required />
         </div>
 
@@ -57,22 +57,10 @@ permitirRol('admin');
         <div class="mb-3 input-icon-wrapper">
           <i class="fas fa-map-marker-alt fa-icon-left"></i>
           <select class="form-select" name="ubicacion" id="ubicacion" autocomplete="off" required>
-            <option selected disabled>Ubicación</option>
-            <option value="1">1 piso</option>
-            <option value="2">2 piso</option>
-            <option value="3">3 piso</option>
-          </select>
-        </div>
-
-        <!-- Especialidad médica -->
-        <div class="mb-3 input-icon-wrapper">
-          <i class="fas fa-stethoscope fa-icon-left"></i>
-          <select class="form-select" name="especialidad" id="especialidad" autocomplete="off" required>
-            <option selected disabled>Especialidad médica</option>
-            <option value="medicina_general">Medicina general</option>
-            <option value="cardiologia">Cardiología</option>
-            <option value="dermatologia">Dermatología</option>
-            <option value="oftalmologia">Oftalmología</option>
+            <option selected disabled value="">Ubicación</option>
+            <option value="Piso 1">Piso 1</option>
+            <option value="Piso 2">Piso 2</option>
+            <option value="Piso 3">Piso 3</option>
           </select>
         </div>
 
@@ -84,7 +72,6 @@ permitirRol('admin');
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
-  <script src="../js/registrar_consultorio.js"></script>
 </body>
 
 </html>

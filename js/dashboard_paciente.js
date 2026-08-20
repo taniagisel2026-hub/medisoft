@@ -30,9 +30,9 @@ if (rolUsuario === "Administrador") {
   panel.innerHTML += crearCard("fas fa-notes-medical", "Registrar Tratamiento", "Gestiona los tratamientos médicos.", "registrar_tratamiento.php");
   panel.innerHTML += crearCard("fas fa-users", "Registrar Usuario", "Administra los usuarios del sistema.", "registro_usuario.php");
 } else {
-  panel.innerHTML += crearCard("fas fa-user", "Información Personal", "Consulta y edita tus datos personales.", "perfil_paciente.html");
+  panel.innerHTML += crearCard("fas fa-user", "Información Personal", "Consulta tus datos personales.", "perfil_paciente.php");
   panel.innerHTML += crearCard("fas fa-calendar-check", "Asignar Cita", "Programa tus citas médicas fácilmente.", "asignar_cita.php");
-  panel.innerHTML += crearCard("fas fa-calendar-times", "Cancelar Cita", "Cancela tus citas médicas programadas.", "cancelar_cita.html");
+  panel.innerHTML += crearCard("fas fa-calendar-times", "Mis Citas", "Consulta o cancela tus citas médicas.", "mis_citas.php");
 }
 
 // Botón de cerrar sesión

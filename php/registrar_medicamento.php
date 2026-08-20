@@ -30,7 +30,7 @@ permitirRol(['admin', 'medico']);
             </button>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="btn btn-light text-primary" href="#" id="logout">Cerrar sesión</a>
+                    <a class="btn btn-light text-primary" href="cerrar_sesion.php" id="logout">Cerrar sesión</a>
                 </li>
             </ul>
         </div>
@@ -44,13 +44,7 @@ permitirRol(['admin', 'medico']);
                 <div class="col-12 col-md-8 col-lg-6">
                     <div class="form-container">
                         <h3>Registrar Medicamento</h3>
-                        <form id="medicamentoForm">
-                            <div class="mb-3 input-icon-wrapper">
-                                <i class="fas fa-barcode fa-icon-left"></i>
-                                <input type="number" id="codigo" name="codigo" class="form-control"
-                                    placeholder="Código del medicamento" required />
-                            </div>
-
+                        <form id="medicamentoForm" action="guardar_medicamento.php" method="POST">
                             <div class="mb-3 input-icon-wrapper">
                                 <i class="fas fa-capsules fa-icon-left"></i>
                                 <input type="text" id="nombre" name="nombre" class="form-control"
@@ -59,26 +53,14 @@ permitirRol(['admin', 'medico']);
 
                             <div class="mb-3 input-icon-wrapper">
                                 <i class="fas fa-notes-medical fa-icon-left"></i>
-                                <input type="text" id="tipo" name="tipo" class="form-control"
-                                    placeholder="Tipo de medicamento" required />
+                                <input type="text" id="descripcion" name="descripcion" class="form-control"
+                                    placeholder="Descripción" required />
                             </div>
 
                             <div class="mb-3 input-icon-wrapper">
                                 <i class="fas fa-pills fa-icon-left"></i>
-                                <input type="text" id="presentacion" name="presentacion" class="form-control"
-                                    placeholder="Presentación" required />
-                            </div>
-
-                            <div class="mb-3 input-icon-wrapper">
-                                <i class="fas fa-calendar-alt fa-icon-left"></i>
-                                <input type="text" id="fechaVencimiento" name="fechaVencimiento" class="form-control"
-                                    placeholder="Fecha de vencimiento" onfocus="(this.type='date')" required />
-                            </div>
-
-                            <div class="mb-3 input-icon-wrapper">
-                                <i class="fas fa-box fa-icon-left"></i>
-                                <input type="text" id="proveedor" name="proveedor" class="form-control"
-                                    placeholder="Proveedor" required />
+                                <input type="text" id="dosis" name="dosis" class="form-control"
+                                    placeholder="Dosis (ej. 500mg cada 8 horas)" required />
                             </div>
 
                             <button type="submit" class="btn custom-register-btn w-100">REGISTRAR</button>
@@ -91,7 +73,6 @@ permitirRol(['admin', 'medico']);
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
-    <script src="../js/registrar_medicamento.js"></script>
 </body>
 
 </html>

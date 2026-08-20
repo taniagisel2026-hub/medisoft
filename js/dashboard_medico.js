@@ -18,7 +18,7 @@ const crearCard = (icono, titulo, descripcion, enlace) => `
   </div>
 `;
 
-panel.innerHTML += crearCard("fas fa-user", "Información Personal", "Consulta y edita tus datos personales.", "perfil_paciente.html");
+panel.innerHTML += crearCard("fas fa-calendar-check", "Mis Citas", "Consulta tu agenda de citas asignadas.", "mis_citas.php");
 panel.innerHTML += crearCard("fas fa-pills", "Registrar Medicamento", "Controla los medicamentos recetados.", "registrar_medicamento.php");
 panel.innerHTML += crearCard("fas fa-notes-medical", "Registrar Tratamiento", "Agrega tratamientos a los pacientes.", "registrar_tratamiento.php");
 

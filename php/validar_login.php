@@ -1,12 +1,6 @@
 <?php
 session_start();
-
-// Conexión
-$conexion = new mysqli("localhost", "root", "", "bd_citas_medicas");
-
-if ($conexion->connect_error) {
-    die("Error en la conexión: " . $conexion->connect_error);
-}
+require 'conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 

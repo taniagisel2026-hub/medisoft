@@ -12,9 +12,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $telefono = $_POST['telefono_usuario'] ?? null;
     $correo = $_POST['correo_electronico_usuario'] ?? null;
     $password = $_POST['contrasena_usuario'] ?? null;
+    $fechaNacimiento = $_POST['fecha_nacimiento'] ?? null;
+    $eps = $_POST['eps_paciente'] ?? null;
+    $sexo = $_POST['sexo'] ?? null;
 
     // Validación
-    if (!$tipo_documento || !$documento || !$nombre || !$apellido || !$direccion || !$telefono || !$correo || !$password) {
+    if (!$tipo_documento || !$documento || !$nombre || !$apellido || !$direccion || !$telefono ||
+        !$correo || !$password || !$fechaNacimiento || !$eps || !$sexo) {
         die("Error: faltan campos obligatorios.");
     }
 
@@ -46,48 +50,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-
     // Encriptar contraseña
     $passHash = password_hash($password, PASSWORD_DEFAULT);
 
     // Rol fijo
     $rol = "paciente";
 
-    // INSERT de 9 campos (excluye id_usuario)
+    $conexion->begin_transaction();
 
-    $sql = "INSERT INTO usuario
-(tipo_documento_usuario, documento_usuario, nombre_usuario, apellido_usuario,
- correo_electronico_usuario, direccion_usuario, telefono_usuario, contrasena_usuario, rol_usuario)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    try {
+        $sql = "INSERT INTO usuario
+        (tipo_documento_usuario, documento_usuario, nombre_usuario, apellido_usuario,
+         correo_electronico_usuario, direccion_usuario, telefono_usuario, contrasena_usuario, rol_usuario)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $stmt = $conexion->prepare($sql);
+        $stmt = $conexion->prepare($sql);
+        $stmt->bind_param(
+            "sssssssss",
+            $tipo_documento,
+            $documento,
+            $nombre,
+            $apellido,
+            $correo,
+            $direccion,
+            $telefono,
+            $passHash,
+            $rol
+        );
+        $stmt->execute();
+        $idUsuario = $conexion->insert_id;
+        $stmt->close();
 
-    $stmt->bind_param(
-        "sssssssss",
-        $tipo_documento,        // tipo_documento_usuario
-        $documento,             // documento_usuario
-        $nombre,                // nombre_usuario
-        $apellido,              // apellido_usuario
-        $correo,                // correo_electronico_usuario
-        $direccion,             // direccion_usuario
-        $telefono,              // telefono_usuario
-        $passHash,              // contrasena_usuario
-        $rol                    // rol_usuario
-    );
+        $stmtPaciente = $conexion->prepare("INSERT INTO paciente (id_paciente, fecha_nacimiento, eps_paciente, sexo) VALUES (?, ?, ?, ?)");
+        $stmtPaciente->bind_param("isss", $idUsuario, $fechaNacimiento, $eps, $sexo);
+        $stmtPaciente->execute();
+        $stmtPaciente->close();
 
-
-
-
-    // Ejecutar
-    if ($stmt->execute()) {
-        echo "<script>
-                alert('✔ Paciente registrado con éxito');
-                window.location.href='../index.html';
-              </script>";
-        exit();
-    } else {
-        echo "Error al registrar: " . $stmt->error;
+        $conexion->commit();
+    } catch (mysqli_sql_exception $e) {
+        $conexion->rollback();
+        die("Error al registrar: " . $e->getMessage());
     }
 
-    $stmt->close();
+    echo "<script>
+            alert('✔ Paciente registrado con éxito');
+            window.location.href='../index.html';
+          </script>";
+    exit();
 }

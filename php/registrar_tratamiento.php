@@ -29,7 +29,7 @@ permitirRol('medico');
             </button>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="btn btn-light text-primary" href="#" id="logout">Cerrar sesión</a>
+                    <a class="btn btn-light text-primary" href="cerrar_sesion.php" id="logout">Cerrar sesión</a>
                 </li>
             </ul>
         </div>
@@ -43,46 +43,16 @@ permitirRol('medico');
                 <div class="col-12 col-md-8 col-lg-6">
                     <div class="form-container">
                         <h3>Registrar Tratamiento</h3>
-                        <form id="tratamientoForm">
-                            <div class="mb-3 input-icon-wrapper">
-                                <i class="fas fa-barcode fa-icon-left"></i>
-                                <input type="number" id="codigo" name="codigo" class="form-control"
-                                    placeholder="Código del tratamiento" required />
-                            </div>
+                        <form id="tratamientoForm" action="guardar_tratamiento.php" method="POST">
                             <div class="mb-3 input-icon-wrapper">
                                 <i class="fas fa-file-medical fa-icon-left"></i>
                                 <input type="text" id="nombre" name="nombre" class="form-control"
                                     placeholder="Nombre del tratamiento" required />
                             </div>
                             <div class="mb-3 input-icon-wrapper">
-                                <i class="fas fa-stethoscope fa-icon-left"></i>
-                                <select id="especialidad" name="especialidad" class="form-select" required>
-                                    <option selected disabled>Especialidad médica</option>
-                                    <option>Medicina general</option>
-                                    <option>Cardiología</option>
-                                    <option>Dermatología</option>
-                                    <option>Oftalmología</option>
-                                </select>
-                            </div>
-                            <div class="mb-3 input-icon-wrapper">
                                 <i class="fas fa-notes-medical fa-icon-left"></i>
                                 <input type="text" id="descripcion" name="descripcion" class="form-control"
-                                    placeholder="Descripción breve" required />
-                            </div>
-                            <div class="mb-3 input-icon-wrapper">
-                                <i class="fas fa-calendar-alt fa-icon-left"></i>
-                                <input type="text" id="duracion" name="duracion" class="form-control"
-                                    placeholder="Duración del tratamiento" required />
-                            </div>
-                            <div class="mb-3 input-icon-wrapper">
-                                <i class="fas fa-pills fa-icon-left"></i>
-                                <input type="text" id="medicamentos" name="medicamentos" class="form-control"
-                                    placeholder="Medicamentos requeridos" />
-                            </div>
-                            <div class="mb-3 input-icon-wrapper">
-                                <i class="fas fa-user-md fa-icon-left"></i>
-                                <input type="text" id="medico" name="medico" class="form-control"
-                                    placeholder="Médico encargado" required />
+                                    placeholder="Descripción del tratamiento" required />
                             </div>
                             <button type="submit" class="btn custom-register-btn w-100">REGISTRAR</button>
                         </form>
@@ -95,7 +65,6 @@ permitirRol('medico');
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
-    <script src="../js/registrar_tratamiento.js"></script>
 </body>
 
 </html>

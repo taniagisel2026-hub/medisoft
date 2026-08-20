@@ -83,6 +83,29 @@
                                 <input type="email" class="form-control" name="correo_electronico_usuario" placeholder="Correo" autocomplete="email" required />
                             </div>
 
+                            <!-- Fecha de nacimiento -->
+                            <div class="mb-3 input-icon-wrapper">
+                                <i class="fas fa-cake-candles fa-icon-left"></i>
+                                <input type="date" class="form-control" name="fecha_nacimiento" placeholder="Fecha de nacimiento" required />
+                            </div>
+
+                            <!-- EPS -->
+                            <div class="mb-3 input-icon-wrapper">
+                                <i class="fas fa-notes-medical fa-icon-left"></i>
+                                <input type="text" class="form-control" name="eps_paciente" placeholder="EPS" required />
+                            </div>
+
+                            <!-- Sexo -->
+                            <div class="mb-3 input-icon-wrapper">
+                                <i class="fas fa-venus-mars fa-icon-left"></i>
+                                <select class="form-select" name="sexo" required>
+                                    <option selected disabled value="">Sexo</option>
+                                    <option value="Femenino">Femenino</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+
                             <!-- Contraseña -->
 
                             <div class="mb-3 input-icon-wrapper">
