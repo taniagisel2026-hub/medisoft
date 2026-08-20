@@ -26,6 +26,7 @@ $perfil = $stmt->get_result()->fetch_assoc();
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="../css/perfil_paciente.css" />
 </head>
 
 <body>
@@ -43,35 +44,83 @@ $perfil = $stmt->get_result()->fetch_assoc();
     </div>
   </nav>
 
-  <div class="container mt-4 mb-5" style="max-width: 600px;">
-    <h3 class="text-center mb-4">Mi Perfil</h3>
-    <div class="form-container">
-      <dl class="row">
-        <dt class="col-sm-5">Documento</dt>
-        <dd class="col-sm-7"><?= htmlspecialchars($perfil['tipo_documento_usuario'] . ' ' . $perfil['documento_usuario']) ?></dd>
+  <div class="container mt-4 mb-5 perfil-page">
 
-        <dt class="col-sm-5">Nombre completo</dt>
-        <dd class="col-sm-7"><?= htmlspecialchars($perfil['nombre_usuario'] . ' ' . $perfil['apellido_usuario']) ?></dd>
-
-        <dt class="col-sm-5">Correo</dt>
-        <dd class="col-sm-7"><?= htmlspecialchars($perfil['correo_electronico_usuario']) ?></dd>
-
-        <dt class="col-sm-5">Dirección</dt>
-        <dd class="col-sm-7"><?= htmlspecialchars($perfil['direccion_usuario']) ?></dd>
-
-        <dt class="col-sm-5">Teléfono</dt>
-        <dd class="col-sm-7"><?= htmlspecialchars($perfil['telefono_usuario']) ?></dd>
-
-        <dt class="col-sm-5">Fecha de nacimiento</dt>
-        <dd class="col-sm-7"><?= htmlspecialchars($perfil['fecha_nacimiento'] ?? 'No registrada') ?></dd>
-
-        <dt class="col-sm-5">EPS</dt>
-        <dd class="col-sm-7"><?= htmlspecialchars($perfil['eps_paciente'] ?? 'No registrada') ?></dd>
-
-        <dt class="col-sm-5">Sexo</dt>
-        <dd class="col-sm-7"><?= htmlspecialchars($perfil['sexo'] ?? 'No registrado') ?></dd>
-      </dl>
+    <!-- Encabezado -->
+    <div class="perfil-header">
+      <div class="avatar"><?= strtoupper(substr($perfil['nombre_usuario'], 0, 1)) ?></div>
+      <div>
+        <h2><?= htmlspecialchars($perfil['nombre_usuario'] . ' ' . $perfil['apellido_usuario']) ?></h2>
+        <span class="rol-badge"><i class="fas fa-user"></i> Paciente</span>
+      </div>
     </div>
+
+    <!-- Datos de contacto -->
+    <div class="perfil-card">
+      <h5><i class="fas fa-address-card"></i> Datos de contacto</h5>
+
+      <div class="perfil-item">
+        <i class="fas fa-id-card"></i>
+        <div>
+          <span class="label">Documento</span>
+          <span class="value"><?= htmlspecialchars($perfil['tipo_documento_usuario'] . ' ' . $perfil['documento_usuario']) ?></span>
+        </div>
+      </div>
+
+      <div class="perfil-item">
+        <i class="fas fa-envelope"></i>
+        <div>
+          <span class="label">Correo</span>
+          <span class="value"><?= htmlspecialchars($perfil['correo_electronico_usuario']) ?></span>
+        </div>
+      </div>
+
+      <div class="perfil-item">
+        <i class="fas fa-location-dot"></i>
+        <div>
+          <span class="label">Dirección</span>
+          <span class="value"><?= htmlspecialchars($perfil['direccion_usuario']) ?></span>
+        </div>
+      </div>
+
+      <div class="perfil-item">
+        <i class="fas fa-phone"></i>
+        <div>
+          <span class="label">Teléfono</span>
+          <span class="value"><?= htmlspecialchars($perfil['telefono_usuario']) ?></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Datos médicos -->
+    <div class="perfil-card">
+      <h5><i class="fas fa-notes-medical"></i> Datos médicos</h5>
+
+      <div class="perfil-item">
+        <i class="fas fa-cake-candles"></i>
+        <div>
+          <span class="label">Fecha de nacimiento</span>
+          <span class="value"><?= htmlspecialchars($perfil['fecha_nacimiento'] ?? 'No registrada') ?></span>
+        </div>
+      </div>
+
+      <div class="perfil-item">
+        <i class="fas fa-shield-heart"></i>
+        <div>
+          <span class="label">EPS</span>
+          <span class="value"><?= htmlspecialchars($perfil['eps_paciente'] ?? 'No registrada') ?></span>
+        </div>
+      </div>
+
+      <div class="perfil-item">
+        <i class="fas fa-venus-mars"></i>
+        <div>
+          <span class="label">Sexo</span>
+          <span class="value"><?= htmlspecialchars($perfil['sexo'] ?? 'No registrado') ?></span>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <footer class="footer">
