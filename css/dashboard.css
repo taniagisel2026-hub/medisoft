@@ -10,6 +10,7 @@
 .perfil-container {
   display: flex;
   justify-content: center;
+  margin-top: 2.5rem;
 }
 
 .perfil-usuario {
@@ -50,18 +51,30 @@
 h3 {
   color: #0a4c84;
   font-weight: bold;
-  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 2.5rem;
   text-align: center;
+  font-size: 1.75rem;
+}
+
+#panelOpciones {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .card {
   text-align: center;
-  padding: 1.5rem;
+  padding: 2.5rem 1.75rem;
   border: none;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
   background-color: white;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .card:hover {
@@ -70,13 +83,28 @@ h3 {
 
 .card i {
   color: #0a4c84;
-  margin-bottom: 10px;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.card h5 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.card p {
+  color: #667085;
+  margin-bottom: 1.5rem;
 }
 
 .btn-custom {
   background-color: #0a4c84;
   color: white;
   border: none;
+  padding: 0.6rem 1.75rem;
+  border-radius: 8px;
+  font-weight: 600;
 }
 
 .btn-custom:hover {

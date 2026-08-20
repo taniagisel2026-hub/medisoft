@@ -55,7 +55,7 @@ if ($_SESSION['rol'] !== 'admin') {
   </div>
 
   <!-- Panel -->
-  <div class="container mt-4 mb-5">
+  <div class="container mt-5 mb-5">
     <h3>Panel del Administrador</h3>
     <div class="row g-4 mt-3" id="panelOpciones"></div>
   </div>

@@ -69,7 +69,7 @@ if (!isset($_SESSION['id']) || $_SESSION['rol'] !== 'recepcionista') {
   </div>
 
   <!-- Panel dinámico -->
-  <div class="container mt-4 mb-5">
+  <div class="container mt-5 mb-5">
     <h3 class="text-center">Panel de Recepcionista</h3>
     <div class="row g-4 mt-3" id="panelOpciones"></div>
   </div>
