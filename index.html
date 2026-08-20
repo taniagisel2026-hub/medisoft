@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Index | MEDISOFT</title>
+
+  <!-- MDB CSS & Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="icon"
+    href="data:image/x-icon;base64,AAABAAEAEBAAAAAAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-custom">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="imagenes/logo medisoft.png" height="50" alt="Logo" loading="lazy" />
+        <img src="imagenes/letra medisoft.png" class="brand-text d-none d-sm-block" alt="Medisoft" />
+      </a>
+
+      <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarContent"
+        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#servicios-especializados">Servicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="#equipo">Equipo Médico</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center">
+          <a href="login.html" class="btn btn-outline-light me-2">Iniciar Sesión</a>
+          <a href="php/registro_paciente.php" class="btn btn-light text-primary">Regístrate</a>
+        </div>
+
+        <div id="usuario-info"></div>
+        <script>
+          window.addEventListener("DOMContentLoaded", () => {
+            const nombre = localStorage.getItem("nombre");
+            const apellido = localStorage.getItem("apellido");
+
+            if (nombre && apellido) {
+              const inicial = nombre.charAt(0).toUpperCase();
+
+              document.getElementById("usuario-info").innerHTML = `
+      <div class="perfil-usuario">
+        <div class="inicial">${inicial}</div>
+        <div>
+          <strong>${nombre} ${apellido}</strong><br>
+          <span>Usuario</span>
+        </div>
+      </div>
+    `;
+            }
+          });
+        </script>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Carrusel -->
+  <div id="medicoCarousel" class="carousel slide" data-mdb-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-mdb-target="#medicoCarousel" data-mdb-slide-to="0" class="active" aria-current="true"
+        aria-label="Slide 1"></button>
+      <button type="button" data-mdb-target="#medicoCarousel" data-mdb-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-mdb-target="#medicoCarousel" data-mdb-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="imagenes/slider 1.jpg" class="d-block w-100" alt="Atención médica personalizada" />
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Atención Médica Personalizada</h5>
+          <p>Profesionales comprometidos con tu salud.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="imagenes/slider 2.jpg" class="d-block w-100" alt="Tecnología de última generación" />
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Tecnología de Última Generación</h5>
+          <p>Diagnóstico rápido y preciso.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="imagenes/slider 3.jpg" class="d-block w-100" alt="Atención 24/7" />
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Atención 24/7</h5>
+          <p>Estamos contigo en todo momento.</p>
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-mdb-target="#medicoCarousel" data-mdb-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-mdb-target="#medicoCarousel" data-mdb-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <!-- Servicios Especializados -->
+  <section class="container my-5" id="servicios-especializados">
+    <h2 class="text-center mb-6 ">Nuestros Servicios</h2>
+    <div class="row text-center">
+
+
+      <!-- Servicio 1 -->
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-circle mx-auto mb-2">
+          <i class="fas fa-stethoscope fa-2x"></i>
+        </div>
+        <p>Medicina general</p>
+      </div>
+
+      <!-- Servicio 2 -->
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-circle mx-auto mb-2">
+          <i class="fas fa-brain fa-2x"></i>
+        </div>
+        <p>Psicología</p>
+      </div>
+
+      <!-- Servicio 3 -->
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-circle mx-auto mb-2">
+          <i class="fas fa-user-md fa-2x"></i>
+        </div>
+        <p>Dermatología</p>
+      </div>
+
+      <!-- Servicio 4 -->
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-circle mx-auto mb-2">
+          <i class="fas fa-house-medical fa-2x"></i>
+        </div>
+        <p>Médico a domicilio</p>
+      </div>
+
+      <!-- Servicio 5 -->
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-circle mx-auto mb-2">
+          <i class="fas fa-vials fa-2x"></i>
+        </div>
+        <p>Exámenes médicos</p>
+      </div>
+
+      <!-- Servicio 6 -->
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-circle mx-auto mb-2">
+          <i class="fas fa-laptop-medical fa-2x"></i>
+        </div>
+        <p>Médico Express</p>
+      </div>
+
+      <!-- Servicio 7 -->
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-circle mx-auto mb-2">
+          <i class="fas fa-head-side-mask fa-2x"></i>
+        </div>
+        <p>Otorrinolaringología</p>
+      </div>
+
+      <!-- Servicio 8 -->
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-circle mx-auto mb-2">
+          <i class="fas fa-apple-alt fa-2x"></i>
+        </div>
+        <p>Nutrición</p>
+      </div>
+
+      <!-- Servicio 9 -->
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-circle mx-auto mb-2">
+          <i class="fas fa-procedures fa-2x"></i>
+        </div>
+        <p>Urología</p>
+      </div>
+
+      <!-- Servicio 10 -->
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-circle mx-auto mb-2">
+          <i class="fas fa-baby fa-2x"></i>
+        </div>
+        <p>Servicios de pediatría</p>
+      </div>
+
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-circle mx-auto mb-2">
+          <i class="fas fa-tooth fa-2x"></i>
+        </div>
+        <p>Odontologia</p>
+      </div>
+
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-circle mx-auto mb-2">
+          <i class="fas fa-heart-pulse fa-2x"></i>
+        </div>
+        <p>Cardiologia</p>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="#" class="text-primary text-decoration-underline">Ver otras especialidades</a>
+    </div>
+  </section>
+
+
+
+
+  <!-- Equipo Médico -->
+  <section class="bg-light py-5" id="equipo">
+    <div class="container">
+      <h2 class="text-center mb-4">Nuestro Equipo Médico</h2>
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="imagenes/doctor01.jpg" class="card-img-top" alt="Dra. Ana López">
+            <div class="card-body text-center">
+              <h5 class="card-title">Dra. Ana López</h5>
+              <p class="card-text">Medicina General</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="imagenes/doctor2.webp" class="card-img-top" alt="Dr. Carlos Ruiz">
+            <div class="card-body text-center">
+              <h5 class="card-title">Dr. Carlos Ruiz</h5>
+              <p class="card-text">Pediatra</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="imagenes/doctor3.jpg" class="card-img-top" alt="Dra. Laura Gómez">
+            <div class="card-body text-center">
+              <h5 class="card-title">Dra. Laura Gómez</h5>
+              <p class="card-text">Odontóloga</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Contacto -->
+  <section class="bg-light py-5" id="contacto">
+    <div class="container text-center">
+      <h2 class="mb-4">Contáctanos</h2>
+      <p>📍 Dirección: Calle 123, Barrio Centro, Ciudad</p>
+      <p>📞 Teléfono: +57 300 000 0000</p>
+      <p>✉️ Correo: contacto@medisoft.com</p>
+      <iframe src="https://maps.google.com/maps?q=Bogotá&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="300"
+        style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center p-4">
+    <p class="mb-2">© 2025 Medisoft. Todos los derechos reservados.</p>
+    <div>
+      <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+    </div>
+  </footer>
+
+  <!-- MDB y JS propio -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+  <script src="js/index.js"></script>
+
+  <!-- Botón flotante de WhatsApp -->
+  <a href="https://wa.me/573000000000?text=Hola%2C%20quiero%20más%20información%20sobre%20los%20servicios"
+    target="_blank" class="whatsapp-float">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+
+</body>
+
+</html>

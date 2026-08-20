@@ -1,0 +1,95 @@
+.navbar-custom {
+  background-color: #0a4c84;
+}
+
+.navbar-custom .nav-link,
+.navbar-custom .navbar-brand {
+  color: #fff;
+}
+
+.perfil-container {
+  display: flex;
+  justify-content: center;
+}
+
+.perfil-usuario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 10px 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.inicial {
+  width: 50px;
+  height: 50px;
+  background: #007bff;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.nombre-usuario .nombre {
+  font-weight: bold;
+  color: #0a4c84;
+  margin: 0;
+}
+
+.nombre-usuario .rol {
+  font-size: 0.9rem;
+  color: #777;
+  margin: 0;
+}
+
+h3 {
+  color: #0a4c84;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.card {
+  text-align: center;
+  padding: 1.5rem;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  background-color: white;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card i {
+  color: #0a4c84;
+  margin-bottom: 10px;
+}
+
+.btn-custom {
+  background-color: #0a4c84;
+  color: white;
+  border: none;
+}
+
+.btn-custom:hover {
+  background-color: #08375f;
+}
+
+.footer {
+  background-color: #0a4c84;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 14px;
+}
