@@ -55,9 +55,9 @@ $perfil = $stmt->get_result()->fetch_assoc();
       </div>
     </div>
 
-    <!-- Datos de contacto -->
+    <!-- Datos personales -->
     <div class="perfil-card">
-      <h5><i class="fas fa-address-card"></i> Datos de contacto</h5>
+      <h5><i class="fas fa-address-card"></i> Datos Personales</h5>
 
       <div class="perfil-item">
         <i class="fas fa-id-card"></i>
@@ -90,11 +90,6 @@ $perfil = $stmt->get_result()->fetch_assoc();
           <span class="value"><?= htmlspecialchars($perfil['telefono_usuario']) ?></span>
         </div>
       </div>
-    </div>
-
-    <!-- Datos médicos -->
-    <div class="perfil-card">
-      <h5><i class="fas fa-notes-medical"></i> Datos médicos</h5>
 
       <div class="perfil-item">
         <i class="fas fa-cake-candles"></i>
