@@ -3,6 +3,7 @@ include 'verificar_sesion.php';
 include 'verificar_rol.php';
 permitirRol('admin');
 require 'conexion.php';
+csrf_validar();
 
 $idMedicamento = filter_input(INPUT_POST, 'id_medicamento', FILTER_VALIDATE_INT);
 $cantidad = filter_input(INPUT_POST, 'cantidad', FILTER_VALIDATE_INT);

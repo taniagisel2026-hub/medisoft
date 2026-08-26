@@ -3,6 +3,7 @@ include 'verificar_sesion.php';
 include 'verificar_rol.php';
 permitirRol(['admin', 'medico']);
 require 'conexion.php';
+csrf_validar();
 
 $nombre = trim($_POST['nombre'] ?? '');
 $descripcion = trim($_POST['descripcion'] ?? '');

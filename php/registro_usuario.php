@@ -46,6 +46,7 @@ permitirRol('recepcionista');
             <p class="text-muted small">Registra a un paciente que llega directamente al mostrador.</p>
 
             <form id="usuarioform" action="procesar_registro_paciente.php" method="POST">
+            <?= csrf_campo() ?>
             <!-- Tipo de identificación -->
             <div class="mb-3 input-icon-wrapper">
               <i class="fas fa-id-card fa-icon-left"></i>
@@ -147,6 +148,7 @@ permitirRol('recepcionista');
   <!-- Scripts -->
   <script src="../js/registro.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 
 </html>

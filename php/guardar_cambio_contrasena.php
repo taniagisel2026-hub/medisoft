@@ -7,6 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
+csrf_validar();
+
 $actual = $_POST['contrasena_actual'] ?? '';
 $nueva = $_POST['nueva_contrasena'] ?? '';
 $confirmar = $_POST['confirmar_contrasena'] ?? '';

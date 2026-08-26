@@ -3,6 +3,7 @@ include 'verificar_sesion.php';
 include 'verificar_rol.php';
 permitirRol('admin');
 require 'conexion.php';
+csrf_validar();
 
 $numero = filter_input(INPUT_POST, 'numero', FILTER_VALIDATE_INT);
 $ubicacion = trim($_POST['ubicacion'] ?? '');

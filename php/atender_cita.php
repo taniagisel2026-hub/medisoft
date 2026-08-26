@@ -33,7 +33,7 @@ $tratamientos = $conexion->query("SELECT id_tratamiento, nombre_tratamiento, des
   <title>Atender Cita | MEDISOFT</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/dashboard.css?v=9" />
+  <link rel="stylesheet" href="../css/dashboard.css?v=10" />
 </head>
 
 <body>
@@ -56,6 +56,7 @@ $tratamientos = $conexion->query("SELECT id_tratamiento, nombre_tratamiento, des
     </div>
 
     <form action="guardar_atencion.php" method="POST">
+    <?= csrf_campo() ?>
       <input type="hidden" name="id_cita" value="<?= (int) $cita['id_cita'] ?>">
 
       <div class="mb-3">
@@ -135,6 +136,7 @@ $tratamientos = $conexion->query("SELECT id_tratamiento, nombre_tratamiento, des
       <a href="mis_citas.php" class="link-info">Volver a mis citas</a>
     </div>
   </div>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 
 </html>

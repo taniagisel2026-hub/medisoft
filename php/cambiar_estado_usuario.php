@@ -3,6 +3,7 @@ include 'verificar_sesion.php';
 include 'verificar_rol.php';
 permitirRol('admin');
 require 'conexion.php';
+csrf_validar();
 
 $idUsuario = filter_input(INPUT_POST, 'id_usuario', FILTER_VALIDATE_INT);
 

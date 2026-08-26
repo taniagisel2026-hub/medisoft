@@ -93,6 +93,7 @@ $perfil = $stmt->get_result()->fetch_assoc();
       <p class="text-muted small mt-3 mb-2">Estos datos no se pueden editar aquí. Los siguientes sí:</p>
 
       <form action="guardar_perfil_paciente.php" method="POST">
+      <?= csrf_campo() ?>
         <div class="mb-3 input-icon-wrapper">
           <i class="fas fa-envelope fa-icon-left"></i>
           <input type="email" class="form-control" name="correo_electronico_usuario" required
@@ -126,6 +127,7 @@ $perfil = $stmt->get_result()->fetch_assoc();
   <footer class="footer">
     © 2025 MEDISOFT | Sistema de Gestión Médica
   </footer>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 
 </html>

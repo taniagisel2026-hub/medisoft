@@ -1,11 +1,14 @@
 <?php
 session_start();
 require 'conexion.php';
+require_once __DIR__ . '/csrf.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: recuperar_contrasena.php');
     exit();
 }
+
+csrf_validar();
 
 $tipo = $_POST['tipo_identificacion'] ?? '';
 $documento = $_POST['numero_documento'] ?? '';

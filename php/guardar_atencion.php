@@ -9,6 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit();
 }
 
+csrf_validar();
+
 $idCita = filter_input(INPUT_POST, 'id_cita', FILTER_VALIDATE_INT);
 $diagnostico = trim($_POST['diagnostico'] ?? '');
 $notas = trim($_POST['notas'] ?? '') ?: null;

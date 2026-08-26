@@ -48,14 +48,18 @@ CREATE TABLE `cita` (
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `diagnostico` text DEFAULT NULL,
   `notas` text DEFAULT NULL,
+  `slot_medico` varchar(60) GENERATED ALWAYS AS (case when `estado_cita` <> 'cancelada' then concat(`id_medico`,'|',`fecha_cita`,'|',`hora`) else NULL end) STORED,
+  `slot_consultorio` varchar(60) GENERATED ALWAYS AS (case when `estado_cita` <> 'cancelada' and `id_consultorio` is not null then concat(`id_consultorio`,'|',`fecha_cita`,'|',`hora`) else NULL end) STORED,
   PRIMARY KEY (`id_cita`),
-  UNIQUE KEY `uq_medico_horario` (`id_medico`,`fecha_cita`,`hora`),
+  UNIQUE KEY `uq_slot_medico` (`slot_medico`),
+  UNIQUE KEY `uq_slot_consultorio` (`slot_consultorio`),
   KEY `fk_cita_paciente` (`id_paciente`),
   KEY `fk_cita_consultorio` (`id_consultorio`),
+  KEY `idx_id_medico` (`id_medico`),
   CONSTRAINT `fk_cita_consultorio` FOREIGN KEY (`id_consultorio`) REFERENCES `consultorio` (`id_consultorio`),
   CONSTRAINT `fk_cita_medico` FOREIGN KEY (`id_medico`) REFERENCES `medico` (`id_medico`),
   CONSTRAINT `fk_cita_paciente` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -110,7 +114,7 @@ CREATE TABLE `consultorio` (
   `ubicacion` varchar(50) NOT NULL,
   `disponibilidad` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_consultorio`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +241,9 @@ CREATE TABLE `usuario` (
   `reset_token` varchar(64) DEFAULT NULL,
   `reset_token_expira` datetime DEFAULT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id_usuario`)
+  PRIMARY KEY (`id_usuario`),
+  UNIQUE KEY `uq_documento_usuario` (`documento_usuario`),
+  UNIQUE KEY `uq_correo_usuario` (`correo_electronico_usuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -254,4 +260,4 @@ CREATE TABLE `usuario` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-08-26 14:11:44
+-- Dump completed on 2026-08-26 14:43:27

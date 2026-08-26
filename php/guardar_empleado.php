@@ -9,6 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit();
 }
 
+csrf_validar();
+
 $tipo_documento = $_POST['tipo_documento_usuario'] ?? '';
 $documento      = $_POST['documento_usuario'] ?? '';
 $nombre         = trim($_POST['nombre_usuario'] ?? '');
@@ -104,6 +106,13 @@ try {
     $conexion->commit();
 } catch (mysqli_sql_exception $e) {
     $conexion->rollback();
+    if ($conexion->errno === 1062) {
+        echo "<script>
+                alert('❌ Ya existe un usuario con ese documento o correo.');
+                window.location.href='registrar_empleado.php';
+              </script>";
+        exit();
+    }
     die("Error al registrar el empleado: " . $e->getMessage());
 }
 

@@ -1,5 +1,7 @@
 <?php
+session_start();
 require 'conexion.php';
+require_once __DIR__ . '/csrf.php';
 
 $token = $_GET['token'] ?? $_POST['token'] ?? '';
 $error = null;
@@ -16,6 +18,7 @@ if ($token) {
 if (!$token || !$usuario) {
     $error = 'Este enlace no es válido o ya venció. Solicita uno nuevo.';
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_validar();
     $nueva = $_POST['nueva_contrasena'] ?? '';
     $confirmar = $_POST['confirmar_contrasena'] ?? '';
 
@@ -84,6 +87,7 @@ if (!$token || !$usuario) {
             <?php endif; ?>
 
             <form method="POST">
+              <?= csrf_campo() ?>
               <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
 
               <div class="mb-3 input-icon-wrapper">

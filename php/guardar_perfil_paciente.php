@@ -9,6 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
+csrf_validar();
+
 $correo = trim($_POST['correo_electronico_usuario'] ?? '');
 $direccion = trim($_POST['direccion_usuario'] ?? '');
 $telefono = trim($_POST['telefono_usuario'] ?? '');

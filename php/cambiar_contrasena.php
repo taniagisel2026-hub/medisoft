@@ -32,6 +32,7 @@ include 'verificar_sesion.php';
       <?php endif; ?>
 
       <form action="guardar_cambio_contrasena.php" method="POST">
+      <?= csrf_campo() ?>
         <div class="mb-3 input-icon-wrapper">
           <i class="fas fa-lock fa-icon-left"></i>
           <input type="password" class="form-control" name="contrasena_actual" placeholder="Contraseña actual" required />
@@ -55,6 +56,7 @@ include 'verificar_sesion.php';
       </p>
     </div>
   </div>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 
 </html>

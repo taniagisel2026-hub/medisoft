@@ -51,6 +51,7 @@ $esRecepcionista = $_SESSION['rol'] === 'recepcionista';
     <div class="form-container">
       <h3>Asignar Cita</h3>
       <form id="citaForm" action="guardar_cita.php" method="POST">
+      <?= csrf_campo() ?>
 
         <?php if ($esRecepcionista): ?>
         <!-- Búsqueda de paciente (solo recepcionista) -->
@@ -117,6 +118,7 @@ $esRecepcionista = $_SESSION['rol'] === 'recepcionista';
   </script>
   <script src="../js/asignar_cita.js?v=4"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 
 </html>

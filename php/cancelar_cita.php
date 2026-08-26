@@ -3,6 +3,7 @@ include 'verificar_sesion.php';
 include 'verificar_rol.php';
 permitirRol(['paciente', 'recepcionista']);
 require 'conexion.php';
+csrf_validar();
 
 $idCita = filter_input(INPUT_POST, 'id_cita', FILTER_VALIDATE_INT);
 

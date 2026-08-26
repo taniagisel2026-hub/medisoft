@@ -9,6 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit();
 }
 
+csrf_validar();
+
 $idCita = filter_input(INPUT_POST, 'id_cita', FILTER_VALIDATE_INT);
 $fecha = $_POST['fecha_cita'] ?? '';
 $hora = $_POST['hora'] ?? '';
@@ -64,8 +66,11 @@ try {
     $stmt->execute();
 } catch (mysqli_sql_exception $e) {
     if ($conexion->errno === 1062) {
+        $mensaje = str_contains($e->getMessage(), 'uq_slot_consultorio')
+            ? '❌ El consultorio ya está ocupado por otro médico a esa hora. Elige otra hora.'
+            : '❌ Ese horario ya fue tomado por otro paciente. Elige otra hora.';
         echo "<script>
-                alert('❌ Ese horario ya fue tomado por otro paciente. Elige otra hora.');
+                alert('{$mensaje}');
                 window.location.href='reagendar_cita.php?id_cita={$idCita}';
               </script>";
         exit();

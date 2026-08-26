@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . '/csrf.php';
 $mensaje = $_SESSION['mensaje_recuperacion'] ?? null;
 unset($_SESSION['mensaje_recuperacion']);
 ?>
@@ -46,6 +47,7 @@ unset($_SESSION['mensaje_recuperacion']);
           <?php endif; ?>
 
           <form action="enviar_recuperacion.php" method="POST">
+            <?= csrf_campo() ?>
             <div class="mb-3 input-icon-wrapper">
               <i class="fas fa-id-card fa-icon-left"></i>
               <select class="form-select" name="tipo_identificacion" required>

@@ -52,6 +52,7 @@ $consultorios = $conexion->query("SELECT id_consultorio, numero, ubicacion FROM 
                     <div class="form-container">
                         <h3>Registrar Empleado</h3>
                         <form id="empleadoForm" action="guardar_empleado.php" method="POST">
+                        <?= csrf_campo() ?>
 
                             <div class="mb-3 input-icon-wrapper">
                                 <i class="fas fa-id-card fa-icon-left"></i>
@@ -192,6 +193,7 @@ $consultorios = $conexion->query("SELECT id_consultorio, numero, ubicacion FROM 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <script src="../js/registrar_empleado.js"></script>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 
 </html>

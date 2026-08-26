@@ -12,6 +12,24 @@ if (!isset($_SESSION['id']) || $_SESSION['rol'] !== 'paciente') {
     header("Location: ../index.html");
     exit();
 }
+
+require 'conexion.php';
+
+$stmtProxima = $conexion->prepare("
+    SELECT c.fecha_cita, c.hora, um.nombre_usuario AS medico_nombre, um.apellido_usuario AS medico_apellido,
+           m.especialidad_medico, cons.numero AS consultorio_numero, cons.ubicacion AS consultorio_ubicacion
+    FROM cita c
+    JOIN medico m ON m.id_medico = c.id_medico
+    JOIN usuario um ON um.id_usuario = m.id_medico
+    LEFT JOIN consultorio cons ON cons.id_consultorio = c.id_consultorio
+    WHERE c.id_paciente = ? AND c.estado_cita = 'pendiente'
+      AND (c.fecha_cita > CURDATE() OR (c.fecha_cita = CURDATE() AND c.hora >= CURTIME()))
+    ORDER BY c.fecha_cita ASC, c.hora ASC
+    LIMIT 1
+");
+$stmtProxima->bind_param("i", $_SESSION['id']);
+$stmtProxima->execute();
+$proximaCita = $stmtProxima->get_result()->fetch_assoc();
 ?>
 
 
@@ -27,7 +45,7 @@ if (!isset($_SESSION['id']) || $_SESSION['rol'] !== 'paciente') {
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
 
   <!-- CSS personalizado -->
-  <link rel="stylesheet" href="../css/dashboard.css?v=9" />
+  <link rel="stylesheet" href="../css/dashboard.css?v=10" />
 </head>
 <body>
 
@@ -66,6 +84,24 @@ if (!isset($_SESSION['id']) || $_SESSION['rol'] !== 'paciente') {
 
     </div>
   </div>
+
+  <?php if ($proximaCita): ?>
+    <div class="container mt-4">
+      <div class="proxima-cita-banner">
+        <i class="fas fa-calendar-check"></i>
+        <div>
+          <strong>Tu próxima cita:</strong>
+          <?= htmlspecialchars(date('d/m/Y', strtotime($proximaCita['fecha_cita']))) ?>
+          a las <?= substr(htmlspecialchars($proximaCita['hora']), 0, 5) ?>
+          con Dr(a). <?= htmlspecialchars($proximaCita['medico_nombre'] . ' ' . $proximaCita['medico_apellido']) ?>
+          (<?= htmlspecialchars($proximaCita['especialidad_medico']) ?>)
+          <?php if ($proximaCita['consultorio_numero']): ?>
+            — Consultorio <?= htmlspecialchars($proximaCita['consultorio_numero'] . ' - ' . $proximaCita['consultorio_ubicacion']) ?>
+          <?php endif; ?>
+        </div>
+      </div>
+    </div>
+  <?php endif; ?>
 
   <!-- Contenido dinámico -->
   <div class="container mt-5 mb-5">

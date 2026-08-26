@@ -54,6 +54,7 @@ $consultorios = $conexion->query("
     <div class="form-container">
       <h3>Registrar Consultorio</h3>
       <form id="consultorioForm" action="guardar_consultorio.php" method="POST">
+      <?= csrf_campo() ?>
         <!-- Número de consultorio -->
         <div class="mb-3 input-icon-wrapper">
           <i class="fas fa-house-medical fa-icon-left"></i>
@@ -114,6 +115,7 @@ $consultorios = $conexion->query("
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 
 </html>

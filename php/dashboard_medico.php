@@ -24,7 +24,7 @@ if ($_SESSION['rol'] !== 'medico') {
   <title>Dashboard Médico | MEDISOFT</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/dashboard.css?v=9">
+  <link rel="stylesheet" href="../css/dashboard.css?v=10">
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-custom">
@@ -34,6 +34,9 @@ if ($_SESSION['rol'] !== 'medico') {
         <img src="../imagenes/letra medisoft.png" class="brand-text d-none d-sm-block" alt="Medisoft">
       </a>
       <ul class="navbar-nav ms-auto">
+        <li class="nav-item me-2">
+          <a class="btn btn-outline-light" href="perfil.php">Mi Perfil</a>
+        </li>
         <li class="nav-item me-2">
           <a class="btn btn-outline-light" href="cambiar_contrasena.php">Cambiar contraseña</a>
         </li>
@@ -65,5 +68,6 @@ if ($_SESSION['rol'] !== 'medico') {
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
   <script src="../js/dashboard_medico.js?v=3"></script>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 </html>

@@ -52,7 +52,11 @@ No se necesita configurar correo ni ninguna clave externa: la recuperación de c
 
 ## Cómo funciona el agendamiento de citas
 
-Cada médico tiene un horario semanal (`horario_medico`: días y rango de horas) y un **consultorio fijo asignado**. Al agendar, el sistema calcula en tiempo real los horarios libres restando las citas ya reservadas de ese médico ese día, bloquea a nivel de base de datos (`UNIQUE KEY`) que dos citas queden en el mismo horario con el mismo médico, y asigna automáticamente el consultorio del médico a la cita — así el paciente siempre sabe a qué consultorio ir.
+Cada médico tiene un horario semanal (`horario_medico`: días y rango de horas) y un **consultorio fijo asignado**. Al agendar, el sistema calcula en tiempo real los horarios libres restando las citas ya reservadas de ese médico ese día, y asigna automáticamente el consultorio del médico a la cita — así el paciente siempre sabe a qué consultorio ir.
+
+Dos restricciones únicas a nivel de base de datos (sobre columnas generadas que ignoran las citas canceladas) evitan que:
+- Un mismo médico quede doble-reservado a la misma hora.
+- Dos médicos que comparten consultorio queden agendados en el mismo cuarto a la misma hora.
 
 Al marcar una cita como atendida, el médico puede recetar medicamentos del inventario (se descuenta el stock automáticamente) y registrar tratamientos aplicados; todo queda visible en el historial clínico del paciente.
 
@@ -61,5 +65,8 @@ Al marcar una cita como atendida, el médico puede recetar medicamentos del inve
 - Contraseñas con `password_hash`/`password_verify` (nunca en texto plano).
 - Sentencias preparadas en todas las consultas con datos del usuario.
 - Recuperación de contraseña con token de un solo uso que vence a los 30 minutos.
+- Documento y correo únicos a nivel de base de datos (no solo validados en la aplicación).
+- Protección CSRF (`php/csrf.php`) en todos los formularios que modifican datos.
+- Páginas protegidas marcadas como no-cache y con un guard de JavaScript para que el botón "atrás" del navegador no muestre contenido de una sesión ya cerrada.
 
-Pendiente conocido: no hay protección CSRF en los formularios; queda como mejora futura si el proyecto se expone fuera de un entorno local/académico.
+Pendiente conocido: `login.html` es un archivo estático y no tiene token CSRF (requeriría convertirlo a `.php`); no hay límite de intentos de inicio de sesión (rate limiting).

@@ -27,7 +27,7 @@ $rolLabel = [
   <title>Gestionar Usuarios | MEDISOFT</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/dashboard.css?v=9" />
+  <link rel="stylesheet" href="../css/dashboard.css?v=10" />
   <style>
     .input-icon-wrapper { position: relative; }
     .input-icon-wrapper i.fa-icon-left {
@@ -92,6 +92,7 @@ $rolLabel = [
                   <a href="editar_usuario.php?id_usuario=<?= (int) $u['id_usuario'] ?>" class="btn btn-sm btn-outline-primary">Editar</a>
                   <?php if ((int) $u['id_usuario'] !== (int) $_SESSION['id']): ?>
                     <form action="cambiar_estado_usuario.php" method="POST" onsubmit="return confirm('¿<?= $u['activo'] ? 'Desactivar' : 'Activar' ?> a este usuario?');">
+                    <?= csrf_campo() ?>
                       <input type="hidden" name="id_usuario" value="<?= (int) $u['id_usuario'] ?>">
                       <button type="submit" class="btn btn-sm <?= $u['activo'] ? 'btn-outline-danger' : 'btn-outline-success' ?>">
                         <?= $u['activo'] ? 'Desactivar' : 'Activar' ?>
@@ -119,6 +120,7 @@ $rolLabel = [
       });
     });
   </script>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 
 </html>

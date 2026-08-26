@@ -9,6 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit();
 }
 
+csrf_validar();
+
 $idUsuario = filter_input(INPUT_POST, 'id_usuario', FILTER_VALIDATE_INT);
 $tipoDocumento = $_POST['tipo_documento_usuario'] ?? '';
 $documento = $_POST['documento_usuario'] ?? '';
@@ -85,6 +87,9 @@ try {
     $conexion->commit();
 } catch (Exception $e) {
     $conexion->rollback();
+    if ($conexion->errno === 1062) {
+        die("Error: ya existe otro usuario con ese documento o correo.");
+    }
     die("Error al guardar los cambios: " . $e->getMessage());
 }
 

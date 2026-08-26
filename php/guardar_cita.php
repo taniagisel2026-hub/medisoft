@@ -9,6 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit();
 }
 
+csrf_validar();
+
 $idMedico = filter_input(INPUT_POST, 'id_medico', FILTER_VALIDATE_INT);
 $fecha = $_POST['fecha_cita'] ?? '';
 $hora = $_POST['hora'] ?? '';
@@ -66,9 +68,12 @@ try {
     $stmt->bind_param("iiisss", $idPaciente, $idMedico, $idConsultorio, $fecha, $hora, $motivo);
     $stmt->execute();
 } catch (mysqli_sql_exception $e) {
-    if ($conexion->errno === 1062) { // duplicado por el UNIQUE KEY (id_medico, fecha_cita, hora)
+    if ($conexion->errno === 1062) { // duplicado por uq_slot_medico o uq_slot_consultorio
+        $mensaje = str_contains($e->getMessage(), 'uq_slot_consultorio')
+            ? '❌ El consultorio ya está ocupado por otro médico a esa hora. Elige otra hora.'
+            : '❌ Ese horario ya fue tomado por otro paciente. Elige otra hora.';
         echo "<script>
-                alert('❌ Ese horario ya fue tomado por otro paciente. Elige otra hora.');
+                alert('{$mensaje}');
                 window.location.href='asignar_cita.php';
               </script>";
         exit();

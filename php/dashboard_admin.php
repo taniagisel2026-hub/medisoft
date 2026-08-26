@@ -35,7 +35,7 @@ $totalPacientes = $conexion->query("SELECT COUNT(*) AS n FROM paciente")->fetch_
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
 
   <!-- CSS personalizado -->
-  <link rel="stylesheet" href="../css/dashboard.css?v=9" />
+  <link rel="stylesheet" href="../css/dashboard.css?v=10" />
 </head>
 <body>
   <!-- Navbar -->
@@ -47,6 +47,9 @@ $totalPacientes = $conexion->query("SELECT COUNT(*) AS n FROM paciente")->fetch_
       </a>
 
       <ul class="navbar-nav ms-auto">
+        <li class="nav-item me-2">
+          <a class="btn btn-outline-light" href="perfil.php">Mi Perfil</a>
+        </li>
         <li class="nav-item me-2">
           <a class="btn btn-outline-light" href="cambiar_contrasena.php">Cambiar contraseña</a>
         </li>
@@ -116,5 +119,6 @@ $totalPacientes = $conexion->query("SELECT COUNT(*) AS n FROM paciente")->fetch_
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
   <script src="../js/dashboard_admin.js?v=4"></script>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 </html>

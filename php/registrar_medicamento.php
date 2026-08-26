@@ -48,6 +48,7 @@ $medicamentos = $conexion->query("SELECT id_medicamento, nombre_medicamento, des
                     <div class="form-container">
                         <h3>Registrar Medicamento</h3>
                         <form id="medicamentoForm" action="guardar_medicamento.php" method="POST">
+                        <?= csrf_campo() ?>
                             <div class="mb-3 input-icon-wrapper">
                                 <i class="fas fa-capsules fa-icon-left"></i>
                                 <input type="text" id="nombre" name="nombre" class="form-control"
@@ -110,6 +111,7 @@ $medicamentos = $conexion->query("SELECT id_medicamento, nombre_medicamento, des
                                             <?php if ($_SESSION['rol'] === 'admin'): ?>
                                             <td>
                                                 <form action="ajustar_stock_medicamento.php" method="POST" class="d-flex gap-1">
+                                                <?= csrf_campo() ?>
                                                     <input type="hidden" name="id_medicamento" value="<?= (int) $m['id_medicamento'] ?>">
                                                     <input type="number" name="cantidad" class="form-control form-control-sm" style="width: 90px;" placeholder="+cantidad" required>
                                                     <button type="submit" class="btn btn-sm btn-outline-primary">Agregar</button>
@@ -128,6 +130,7 @@ $medicamentos = $conexion->query("SELECT id_medicamento, nombre_medicamento, des
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 
 </html>

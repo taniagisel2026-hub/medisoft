@@ -56,6 +56,11 @@ $badges = [
     'cancelada' => 'bg-danger',
     'atendida'  => 'bg-success',
 ];
+
+$totalCitas = count($citas);
+$totalPendientes = count(array_filter($citas, fn($c) => $c['estado_cita'] === 'pendiente'));
+$totalAtendidas = count(array_filter($citas, fn($c) => $c['estado_cita'] === 'atendida'));
+$totalCanceladas = count(array_filter($citas, fn($c) => $c['estado_cita'] === 'cancelada'));
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -66,7 +71,7 @@ $badges = [
   <title>Mis Citas | MEDISOFT</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/dashboard.css?v=9" />
+  <link rel="stylesheet" href="../css/dashboard.css?v=10" />
   <style>
     .input-icon-wrapper { position: relative; }
     .input-icon-wrapper i.fa-icon-left {
@@ -74,6 +79,37 @@ $badges = [
       color: #0a4c84; pointer-events: none;
     }
     .input-icon-wrapper input { padding-left: 2.4rem; }
+
+    .citas-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(10, 76, 132, 0.1);
+      padding: 0.5rem;
+    }
+
+    .citas-card table thead th {
+      color: #0a4c84;
+      border-bottom: 2px solid #e8f1fa;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .citas-vacio {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(10, 76, 132, 0.1);
+      padding: 3rem 1rem;
+      color: #8a95a3;
+    }
+
+    .citas-vacio i {
+      font-size: 2.2rem;
+      color: #0a4c84;
+      opacity: 0.5;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
   </style>
 </head>
 
@@ -95,6 +131,39 @@ $badges = [
   <div class="container mt-4 mb-5">
     <h3 class="text-center mb-4"><?= $rol === 'paciente' ? 'Mis Citas' : 'Citas Agendadas' ?></h3>
 
+    <?php if (!empty($citas)): ?>
+      <div class="row g-3 justify-content-center mb-4">
+        <div class="col-6 col-lg-3">
+          <div class="stat-card">
+            <i class="fas fa-calendar-check"></i>
+            <div class="stat-numero"><?= $totalCitas ?></div>
+            <div class="stat-label">Total citas</div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-card">
+            <i class="fas fa-hourglass-half"></i>
+            <div class="stat-numero"><?= $totalPendientes ?></div>
+            <div class="stat-label">Pendientes</div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-card">
+            <i class="fas fa-circle-check"></i>
+            <div class="stat-numero"><?= $totalAtendidas ?></div>
+            <div class="stat-label">Atendidas</div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-card">
+            <i class="fas fa-circle-xmark"></i>
+            <div class="stat-numero"><?= $totalCanceladas ?></div>
+            <div class="stat-label">Canceladas</div>
+          </div>
+        </div>
+      </div>
+    <?php endif; ?>
+
     <?php if ($rol !== 'paciente' && !empty($citas)): ?>
       <div class="row justify-content-center mb-3">
         <div class="col-12 col-md-6 input-icon-wrapper">
@@ -105,10 +174,13 @@ $badges = [
     <?php endif; ?>
 
     <?php if (empty($citas)): ?>
-      <p class="text-center text-muted">No hay citas registradas todavía.</p>
+      <div class="citas-vacio text-center">
+        <i class="fas fa-calendar-xmark"></i>
+        <p class="mb-0">No hay citas registradas todavía.</p>
+      </div>
     <?php else: ?>
-      <div class="table-responsive">
-        <table class="table table-striped align-middle" id="tablaCitas">
+      <div class="citas-card table-responsive">
+        <table class="table table-striped align-middle mb-0" id="tablaCitas">
           <thead>
             <tr>
               <th>Fecha</th>
@@ -130,7 +202,7 @@ $badges = [
                 <?php if ($rol !== 'paciente'): ?>
                   <td>
                     <?= htmlspecialchars($c['paciente_nombre'] . ' ' . $c['paciente_apellido']) ?>
-                    <a href="historial_paciente.php?id_paciente=<?= (int) $c['id_paciente'] ?>" class="d-block small">Ver historial</a>
+                    <a href="historial_paciente.php?id_paciente=<?= (int) $c['id_paciente'] ?>" class="d-block small"><i class="fas fa-notes-medical"></i> Ver historial</a>
                   </td>
                   <td><?= htmlspecialchars($c['paciente_documento']) ?></td>
                 <?php endif; ?>
@@ -144,13 +216,20 @@ $badges = [
                 <td><span class="badge <?= $badges[$c['estado_cita']] ?>"><?= ucfirst($c['estado_cita']) ?></span></td>
                 <td>
                   <?php if ($c['estado_cita'] === 'pendiente' && $rol === 'medico'): ?>
-                    <a href="atender_cita.php?id_cita=<?= (int) $c['id_cita'] ?>" class="btn btn-sm btn-outline-success">Marcar como atendida</a>
+                    <a href="atender_cita.php?id_cita=<?= (int) $c['id_cita'] ?>" class="btn btn-sm btn-outline-success">
+                      <i class="fas fa-stethoscope"></i> Marcar como atendida
+                    </a>
                   <?php elseif ($c['estado_cita'] === 'pendiente' && $rol !== 'medico'): ?>
                     <div class="d-flex gap-1">
-                      <a href="reagendar_cita.php?id_cita=<?= (int) $c['id_cita'] ?>" class="btn btn-sm btn-outline-primary">Reagendar</a>
+                      <a href="reagendar_cita.php?id_cita=<?= (int) $c['id_cita'] ?>" class="btn btn-sm btn-outline-primary" title="Reagendar">
+                        <i class="fas fa-calendar-days"></i>
+                      </a>
                       <form action="cancelar_cita.php" method="POST" onsubmit="return confirm('¿Cancelar esta cita?');">
+                      <?= csrf_campo() ?>
                         <input type="hidden" name="id_cita" value="<?= (int) $c['id_cita'] ?>">
-                        <button type="submit" class="btn btn-sm btn-outline-danger">Cancelar</button>
+                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Cancelar">
+                          <i class="fas fa-xmark"></i>
+                        </button>
                       </form>
                     </div>
                   <?php endif; ?>
@@ -165,7 +244,7 @@ $badges = [
 
     <?php if ($rol !== 'medico'): ?>
       <div class="text-center mt-3">
-        <a href="asignar_cita.php" class="btn custom-register-btn">Agendar nueva cita</a>
+        <a href="asignar_cita.php" class="btn custom-register-btn"><i class="fas fa-calendar-plus"></i> Agendar nueva cita</a>
       </div>
     <?php endif; ?>
   </div>
@@ -190,6 +269,7 @@ $badges = [
       });
     }
   </script>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 
 </html>

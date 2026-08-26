@@ -84,6 +84,7 @@ $dias = [1 => 'Lun', 2 => 'Mar', 3 => 'Mié', 4 => 'Jue', 5 => 'Vie', 6 => 'Sáb
             </p>
 
             <form action="guardar_edicion_usuario.php" method="POST">
+            <?= csrf_campo() ?>
               <input type="hidden" name="id_usuario" value="<?= (int) $usuario['id_usuario'] ?>">
 
               <div class="mb-3 input-icon-wrapper">
@@ -193,6 +194,7 @@ $dias = [1 => 'Lun', 2 => 'Mar', 3 => 'Mié', 4 => 'Jue', 5 => 'Vie', 6 => 'Sáb
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 
 </html>

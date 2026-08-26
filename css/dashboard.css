@@ -188,6 +188,24 @@ h3 {
   margin-top: 0.25rem;
 }
 
+.proxima-cita-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, #0a4c84, #1b78c2);
+  color: #fff;
+  border-radius: 14px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 8px 20px rgba(10, 76, 132, 0.2);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.proxima-cita-banner i {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
 .footer {
   background-color: #0a4c84;
   color: #fff;

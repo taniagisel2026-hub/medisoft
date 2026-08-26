@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "conexion.php";
+require_once __DIR__ . '/csrf.php';
 
 // Si lo registra un recepcionista logueado, lo devolvemos a su propio panel;
 // si es un visitante público registrándose por su cuenta, al sitio público.
@@ -9,6 +10,7 @@ $volverFormulario = $esRecepcionista ? 'registro_usuario.php' : 'registro_pacien
 $volverExito = $esRecepcionista ? 'dashboard_recep.php' : '../index.html';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    csrf_validar();
 
     // Recibir datos
     $tipo_documento = $_POST['tipo_documento_usuario'] ?? null;
@@ -96,6 +98,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conexion->commit();
     } catch (mysqli_sql_exception $e) {
         $conexion->rollback();
+        if ($conexion->errno === 1062) {
+            echo "<script>
+                    alert('❌ Ese documento o correo ya está registrado.');
+                    window.location.href='{$volverFormulario}';
+                  </script>";
+            exit();
+        }
         die("Error al registrar: " . $e->getMessage());
     }
 

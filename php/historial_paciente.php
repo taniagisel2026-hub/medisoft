@@ -57,7 +57,7 @@ $badges = [
   <title>Historial Clínico | MEDISOFT</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/dashboard.css?v=9" />
+  <link rel="stylesheet" href="../css/dashboard.css?v=10" />
 </head>
 
 <body>
@@ -129,6 +129,7 @@ $badges = [
   <footer class="footer">
     © 2025 MEDISOFT | Sistema de Gestión Médica
   </footer>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 
 </html>

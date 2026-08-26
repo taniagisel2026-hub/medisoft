@@ -1,3 +1,7 @@
+<?php
+session_start();
+require_once __DIR__ . '/csrf.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -34,6 +38,7 @@
                     <div class="form-container">
                         <h3>Registrar Paciente</h3>
                         <form id="usuarioform" action="procesar_registro_paciente.php" method="POST">
+                            <?= csrf_campo() ?>
 
                             <!-- Tipo de identificación -->
                             <div class="mb-3 input-icon-wrapper">

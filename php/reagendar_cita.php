@@ -65,6 +65,7 @@ if (!$cita) {
       </p>
 
       <form id="reagendarForm" action="guardar_reagendo.php" method="POST">
+      <?= csrf_campo() ?>
         <input type="hidden" name="id_cita" value="<?= (int) $cita['id_cita'] ?>">
 
         <div class="mb-3 input-icon-wrapper">
@@ -96,6 +97,7 @@ if (!$cita) {
   </script>
   <script src="../js/reagendar_cita.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 
 </html>

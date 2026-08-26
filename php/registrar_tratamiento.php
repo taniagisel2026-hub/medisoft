@@ -47,6 +47,7 @@ $tratamientos = $conexion->query("SELECT nombre_tratamiento, descripcion_tratami
                     <div class="form-container">
                         <h3>Registrar Tratamiento</h3>
                         <form id="tratamientoForm" action="guardar_tratamiento.php" method="POST">
+                        <?= csrf_campo() ?>
                             <div class="mb-3 input-icon-wrapper">
                                 <i class="fas fa-file-medical fa-icon-left"></i>
                                 <input type="text" id="nombre" name="nombre" class="form-control"
@@ -96,6 +97,7 @@ $tratamientos = $conexion->query("SELECT nombre_tratamiento, descripcion_tratami
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+  <script src="../js/bfcache_guard.js"></script>
 </body>
 
 </html>

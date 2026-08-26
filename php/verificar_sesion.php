@@ -5,6 +5,7 @@ header("Pragma: no-cache");
 header("Expires: 0");
 
 session_start();
+require_once __DIR__ . '/csrf.php';
 
 // Si no hay sesión iniciada → no deja entrar
 if (!isset($_SESSION['id']) || !isset($_SESSION['rol'])) {
