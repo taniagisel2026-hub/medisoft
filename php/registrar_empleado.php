@@ -3,6 +3,9 @@
 include 'verificar_sesion.php';
 include 'verificar_rol.php';
 permitirRol('admin');
+require 'conexion.php';
+
+$consultorios = $conexion->query("SELECT id_consultorio, numero, ubicacion FROM consultorio WHERE disponibilidad = 1 ORDER BY numero")->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -119,6 +122,18 @@ permitirRol('admin');
                                     <i class="fas fa-id-badge fa-icon-left"></i>
                                     <input type="number" id="tarjetaProfesional" name="tarjeta_profesional"
                                         class="form-control" placeholder="Número de tarjeta profesional" />
+                                </div>
+
+                                <div class="mb-3 input-icon-wrapper">
+                                    <i class="fas fa-door-open fa-icon-left"></i>
+                                    <select id="idConsultorio" name="id_consultorio" class="form-select">
+                                        <option selected disabled value="">Consultorio asignado</option>
+                                        <?php foreach ($consultorios as $c): ?>
+                                            <option value="<?= (int) $c['id_consultorio'] ?>">
+                                                <?= htmlspecialchars($c['numero'] . ' - ' . $c['ubicacion']) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
 
                                 <label class="form-label d-block">Horario de atención</label>

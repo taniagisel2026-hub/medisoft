@@ -2,6 +2,9 @@
 include 'verificar_sesion.php';
 include 'verificar_rol.php';
 permitirRol('medico');
+require 'conexion.php';
+
+$tratamientos = $conexion->query("SELECT nombre_tratamiento, descripcion_tratamiento FROM tratamiento ORDER BY nombre_tratamiento")->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -58,6 +61,34 @@ permitirRol('medico');
                         </form>
 
                     </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mt-5">
+                <div class="col-12 col-lg-8">
+                    <h4 class="text-center mb-3">Tratamientos disponibles</h4>
+                    <?php if (empty($tratamientos)): ?>
+                        <p class="text-center text-muted">No hay tratamientos registrados todavía.</p>
+                    <?php else: ?>
+                        <div class="table-responsive">
+                            <table class="table table-striped align-middle bg-white">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($tratamientos as $t): ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($t['nombre_tratamiento']) ?></td>
+                                            <td><?= htmlspecialchars($t['descripcion_tratamiento']) ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

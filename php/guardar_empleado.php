@@ -28,14 +28,15 @@ if (!in_array($tipo_documento, $tiposValidos) || !$documento || !$nombre || !$ap
 
 $especialidad = trim($_POST['especialidad'] ?? '');
 $tarjetaProfesional = $_POST['tarjeta_profesional'] ?? '';
+$idConsultorio = filter_input(INPUT_POST, 'id_consultorio', FILTER_VALIDATE_INT);
 $dias = $_POST['dias'] ?? [];
 $horaInicio = $_POST['hora_inicio'] ?? '08:00';
 $horaFin = $_POST['hora_fin'] ?? '17:00';
 
 if ($cargo === 'medico') {
     $diasValidos = array_values(array_intersect(array_map('intval', $dias), range(1, 7)));
-    if (!$especialidad || !$tarjetaProfesional || empty($diasValidos) || $horaInicio >= $horaFin) {
-        die("Error: para un médico debes indicar especialidad, tarjeta profesional, al menos un día y un horario válido.");
+    if (!$especialidad || !$tarjetaProfesional || !$idConsultorio || empty($diasValidos) || $horaInicio >= $horaFin) {
+        die("Error: para un médico debes indicar especialidad, tarjeta profesional, consultorio, al menos un día y un horario válido.");
     }
 }
 
@@ -82,8 +83,8 @@ try {
     $stmtEmp->close();
 
     if ($cargo === 'medico') {
-        $stmtMed = $conexion->prepare("INSERT INTO medico (id_medico, especialidad_medico, numero_tarjeta_profesional) VALUES (?, ?, ?)");
-        $stmtMed->bind_param("isi", $idUsuario, $especialidad, $tarjetaProfesional);
+        $stmtMed = $conexion->prepare("INSERT INTO medico (id_medico, especialidad_medico, numero_tarjeta_profesional, id_consultorio) VALUES (?, ?, ?, ?)");
+        $stmtMed->bind_param("isii", $idUsuario, $especialidad, $tarjetaProfesional, $idConsultorio);
         $stmtMed->execute();
         $stmtMed->close();
 

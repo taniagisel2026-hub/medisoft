@@ -99,3 +99,20 @@ body {
   font-weight: 600;
   color: #1c2733;
 }
+
+.input-icon-wrapper {
+  position: relative;
+}
+
+.input-icon-wrapper i.fa-icon-left {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  color: #0a4c84;
+  pointer-events: none;
+}
+
+.input-icon-wrapper input {
+  padding-left: 2.4rem;
+}

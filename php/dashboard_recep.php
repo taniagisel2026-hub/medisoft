@@ -24,7 +24,7 @@ if (!isset($_SESSION['id']) || $_SESSION['rol'] !== 'recepcionista') {
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
 
   <!-- CSS personalizado -->
-  <link rel="stylesheet" href="../css/dashboard.css?v=5" />
+  <link rel="stylesheet" href="../css/dashboard.css?v=9" />
 </head>
 <body>
 
@@ -37,6 +37,9 @@ if (!isset($_SESSION['id']) || $_SESSION['rol'] !== 'recepcionista') {
       </a>
 
       <ul class="navbar-nav ms-auto">
+        <li class="nav-item me-2">
+          <a class="btn btn-outline-light" href="cambiar_contrasena.php">Cambiar contraseña</a>
+        </li>
         <li class="nav-item">
           <a class="btn btn-light text-primary" href="#" id="logout">Cerrar sesión</a>
         </li>
@@ -90,7 +93,7 @@ if (!isset($_SESSION['id']) || $_SESSION['rol'] !== 'recepcionista') {
 
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
-  <script src="../js/dashboard_recep.js"></script>
+  <script src="../js/dashboard_recep.js?v=2"></script>
 </body>
 </html>
 

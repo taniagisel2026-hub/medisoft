@@ -1,4 +1,8 @@
 <?php
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: 0");
+
 session_start();
 
 if (!isset($_SESSION['id'])) {
@@ -10,6 +14,13 @@ if ($_SESSION['rol'] !== 'admin') {
     echo "<script>alert('❌ No tienes permisos para acceder aquí'); window.location.href='../index.html';</script>";
     exit();
 }
+
+require 'conexion.php';
+
+$citasHoy = $conexion->query("SELECT COUNT(*) AS n FROM cita WHERE fecha_cita = CURDATE() AND estado_cita <> 'cancelada'")->fetch_assoc()['n'];
+$citasPendientes = $conexion->query("SELECT COUNT(*) AS n FROM cita WHERE estado_cita = 'pendiente'")->fetch_assoc()['n'];
+$totalMedicos = $conexion->query("SELECT COUNT(*) AS n FROM medico")->fetch_assoc()['n'];
+$totalPacientes = $conexion->query("SELECT COUNT(*) AS n FROM paciente")->fetch_assoc()['n'];
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +35,7 @@ if ($_SESSION['rol'] !== 'admin') {
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
 
   <!-- CSS personalizado -->
-  <link rel="stylesheet" href="../css/dashboard.css?v=5" />
+  <link rel="stylesheet" href="../css/dashboard.css?v=9" />
 </head>
 <body>
   <!-- Navbar -->
@@ -36,6 +47,9 @@ if ($_SESSION['rol'] !== 'admin') {
       </a>
 
       <ul class="navbar-nav ms-auto">
+        <li class="nav-item me-2">
+          <a class="btn btn-outline-light" href="cambiar_contrasena.php">Cambiar contraseña</a>
+        </li>
         <li class="nav-item">
           <a class="btn btn-light text-primary" href="#" id="logout">Cerrar sesión</a>
         </li>
@@ -54,10 +68,44 @@ if ($_SESSION['rol'] !== 'admin') {
     </div>
   </div>
 
+  <!-- Estadísticas -->
+  <div class="container mt-5">
+    <div class="row g-3">
+      <div class="col-6 col-lg-3">
+        <div class="stat-card">
+          <i class="fas fa-calendar-day"></i>
+          <div class="stat-numero"><?= (int) $citasHoy ?></div>
+          <div class="stat-label">Citas hoy</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="stat-card">
+          <i class="fas fa-hourglass-half"></i>
+          <div class="stat-numero"><?= (int) $citasPendientes ?></div>
+          <div class="stat-label">Citas pendientes</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="stat-card">
+          <i class="fas fa-user-md"></i>
+          <div class="stat-numero"><?= (int) $totalMedicos ?></div>
+          <div class="stat-label">Médicos activos</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="stat-card">
+          <i class="fas fa-users"></i>
+          <div class="stat-numero"><?= (int) $totalPacientes ?></div>
+          <div class="stat-label">Pacientes registrados</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Panel -->
-  <div class="container mt-5 mb-5">
+  <div class="container-fluid px-4 mt-5 mb-5">
     <h3>Panel del Administrador</h3>
-    <div class="row g-4 mt-3" id="panelOpciones"></div>
+    <div class="row g-4 mt-3 cards-5" id="panelOpciones"></div>
   </div>
 
   <!-- Footer -->
@@ -67,6 +115,6 @@ if ($_SESSION['rol'] !== 'admin') {
 
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
-  <script src="../js/dashboard_admin.js?v=2"></script>
+  <script src="../js/dashboard_admin.js?v=4"></script>
 </body>
 </html>

@@ -2,6 +2,9 @@
 include 'verificar_sesion.php';
 include 'verificar_rol.php';
 permitirRol(['admin', 'medico']);
+require 'conexion.php';
+
+$medicamentos = $conexion->query("SELECT id_medicamento, nombre_medicamento, descripcion_medicamento, dosis, cantidad_disponible FROM medicamento ORDER BY nombre_medicamento")->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -63,10 +66,62 @@ permitirRol(['admin', 'medico']);
                                     placeholder="Dosis (ej. 500mg cada 8 horas)" required />
                             </div>
 
+                            <div class="mb-3 input-icon-wrapper">
+                                <i class="fas fa-boxes-stacked fa-icon-left"></i>
+                                <input type="number" id="cantidad_disponible" name="cantidad_disponible" class="form-control"
+                                    placeholder="Cantidad inicial en inventario" min="0" required />
+                            </div>
+
                             <button type="submit" class="btn custom-register-btn w-100">REGISTRAR</button>
                         </form>
 
                     </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mt-5">
+                <div class="col-12 col-lg-10">
+                    <h4 class="text-center mb-3">Inventario de Medicamentos</h4>
+                    <?php if (empty($medicamentos)): ?>
+                        <p class="text-center text-muted">No hay medicamentos registrados todavía.</p>
+                    <?php else: ?>
+                        <div class="table-responsive">
+                            <table class="table table-striped align-middle bg-white">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                        <th>Dosis</th>
+                                        <th>Stock</th>
+                                        <?php if ($_SESSION['rol'] === 'admin'): ?><th></th><?php endif; ?>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($medicamentos as $m): ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($m['nombre_medicamento']) ?></td>
+                                            <td><?= htmlspecialchars($m['descripcion_medicamento']) ?></td>
+                                            <td><?= htmlspecialchars($m['dosis']) ?></td>
+                                            <td>
+                                                <span class="badge <?= $m['cantidad_disponible'] > 0 ? 'bg-success' : 'bg-danger' ?>">
+                                                    <?= (int) $m['cantidad_disponible'] ?>
+                                                </span>
+                                            </td>
+                                            <?php if ($_SESSION['rol'] === 'admin'): ?>
+                                            <td>
+                                                <form action="ajustar_stock_medicamento.php" method="POST" class="d-flex gap-1">
+                                                    <input type="hidden" name="id_medicamento" value="<?= (int) $m['id_medicamento'] ?>">
+                                                    <input type="number" name="cantidad" class="form-control form-control-sm" style="width: 90px;" placeholder="+cantidad" required>
+                                                    <button type="submit" class="btn btn-sm btn-outline-primary">Agregar</button>
+                                                </form>
+                                            </td>
+                                            <?php endif; ?>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

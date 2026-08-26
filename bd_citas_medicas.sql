@@ -46,6 +46,8 @@ CREATE TABLE `cita` (
   `estado_cita` enum('pendiente','cancelada','atendida') NOT NULL DEFAULT 'pendiente',
   `motivo` varchar(255) DEFAULT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
+  `diagnostico` text DEFAULT NULL,
+  `notas` text DEFAULT NULL,
   PRIMARY KEY (`id_cita`),
   UNIQUE KEY `uq_medico_horario` (`id_medico`,`fecha_cita`,`hora`),
   KEY `fk_cita_paciente` (`id_paciente`),
@@ -53,7 +55,46 @@ CREATE TABLE `cita` (
   CONSTRAINT `fk_cita_consultorio` FOREIGN KEY (`id_consultorio`) REFERENCES `consultorio` (`id_consultorio`),
   CONSTRAINT `fk_cita_medico` FOREIGN KEY (`id_medico`) REFERENCES `medico` (`id_medico`),
   CONSTRAINT `fk_cita_paciente` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cita_medicamento`
+--
+
+DROP TABLE IF EXISTS `cita_medicamento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cita_medicamento` (
+  `id_cita_medicamento` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cita` int(11) NOT NULL,
+  `id_medicamento` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  PRIMARY KEY (`id_cita_medicamento`),
+  KEY `id_cita` (`id_cita`),
+  KEY `id_medicamento` (`id_medicamento`),
+  CONSTRAINT `cita_medicamento_ibfk_1` FOREIGN KEY (`id_cita`) REFERENCES `cita` (`id_cita`) ON DELETE CASCADE,
+  CONSTRAINT `cita_medicamento_ibfk_2` FOREIGN KEY (`id_medicamento`) REFERENCES `medicamento` (`id_medicamento`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cita_tratamiento`
+--
+
+DROP TABLE IF EXISTS `cita_tratamiento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cita_tratamiento` (
+  `id_cita_tratamiento` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cita` int(11) NOT NULL,
+  `id_tratamiento` int(11) NOT NULL,
+  PRIMARY KEY (`id_cita_tratamiento`),
+  KEY `id_cita` (`id_cita`),
+  KEY `id_tratamiento` (`id_tratamiento`),
+  CONSTRAINT `cita_tratamiento_ibfk_1` FOREIGN KEY (`id_cita`) REFERENCES `cita` (`id_cita`) ON DELETE CASCADE,
+  CONSTRAINT `cita_tratamiento_ibfk_2` FOREIGN KEY (`id_tratamiento`) REFERENCES `tratamiento` (`id_tratamiento`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +110,7 @@ CREATE TABLE `consultorio` (
   `ubicacion` varchar(50) NOT NULL,
   `disponibilidad` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_consultorio`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,7 +125,7 @@ CREATE TABLE `empleado` (
   `cargo` varchar(50) NOT NULL,
   PRIMARY KEY (`id_empleado`),
   CONSTRAINT `empleado_ibfk_1` FOREIGN KEY (`id_empleado`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=186 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,7 +145,7 @@ CREATE TABLE `horario_medico` (
   PRIMARY KEY (`id_horario`),
   KEY `id_medico` (`id_medico`),
   CONSTRAINT `horario_medico_ibfk_1` FOREIGN KEY (`id_medico`) REFERENCES `medico` (`id_medico`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,8 +160,9 @@ CREATE TABLE `medicamento` (
   `nombre_medicamento` varchar(50) NOT NULL,
   `descripcion_medicamento` varchar(500) NOT NULL,
   `dosis` varchar(70) NOT NULL,
+  `cantidad_disponible` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_medicamento`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,9 +176,12 @@ CREATE TABLE `medico` (
   `id_medico` int(5) NOT NULL AUTO_INCREMENT,
   `especialidad_medico` varchar(70) NOT NULL,
   `numero_tarjeta_profesional` int(20) NOT NULL,
+  `id_consultorio` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_medico`),
+  KEY `fk_medico_consultorio` (`id_consultorio`),
+  CONSTRAINT `fk_medico_consultorio` FOREIGN KEY (`id_consultorio`) REFERENCES `consultorio` (`id_consultorio`),
   CONSTRAINT `medico_ibfk_1` FOREIGN KEY (`id_medico`) REFERENCES `empleado` (`id_empleado`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=186 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,7 +213,7 @@ CREATE TABLE `tratamiento` (
   `nombre_tratamiento` varchar(60) NOT NULL,
   `descripcion_tratamiento` varchar(500) NOT NULL,
   PRIMARY KEY (`id_tratamiento`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,8 +236,9 @@ CREATE TABLE `usuario` (
   `rol_usuario` varchar(30) NOT NULL,
   `reset_token` varchar(64) DEFAULT NULL,
   `reset_token_expira` datetime DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=187 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -208,4 +254,4 @@ CREATE TABLE `usuario` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-08-26 13:19:08
+-- Dump completed on 2026-08-26 14:11:44

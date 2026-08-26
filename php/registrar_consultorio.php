@@ -2,6 +2,14 @@
 include 'verificar_sesion.php';
 include 'verificar_rol.php';
 permitirRol('admin');
+require 'conexion.php';
+
+$consultorios = $conexion->query("
+    SELECT c.id_consultorio, c.numero, c.ubicacion, c.disponibilidad,
+           (SELECT COUNT(*) FROM cita WHERE id_consultorio = c.id_consultorio AND fecha_cita = CURDATE() AND estado_cita <> 'cancelada') AS citas_hoy
+    FROM consultorio c
+    ORDER BY c.numero
+")->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -69,6 +77,40 @@ permitirRol('admin');
       </form>
 
     </div>
+  </div>
+
+  <div class="container mb-5" style="max-width: 900px;">
+    <h4 class="text-center mb-3">Consultorios</h4>
+    <?php if (empty($consultorios)): ?>
+      <p class="text-center text-muted">No hay consultorios registrados todavía.</p>
+    <?php else: ?>
+      <div class="table-responsive">
+        <table class="table table-striped align-middle bg-white">
+          <thead>
+            <tr>
+              <th>Número</th>
+              <th>Ubicación</th>
+              <th>Estado</th>
+              <th>Citas de hoy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($consultorios as $c): ?>
+              <tr>
+                <td><?= (int) $c['numero'] ?></td>
+                <td><?= htmlspecialchars($c['ubicacion']) ?></td>
+                <td>
+                  <span class="badge <?= $c['disponibilidad'] ? 'bg-success' : 'bg-secondary' ?>">
+                    <?= $c['disponibilidad'] ? 'Disponible' : 'Inactivo' ?>
+                  </span>
+                </td>
+                <td><?= (int) $c['citas_hoy'] ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    <?php endif; ?>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>

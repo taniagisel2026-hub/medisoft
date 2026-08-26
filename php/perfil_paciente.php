@@ -37,6 +37,9 @@ $perfil = $stmt->get_result()->fetch_assoc();
         <img src="../imagenes/letra medisoft.png" class="brand-text d-none d-sm-block" alt="Medisoft" />
       </a>
       <ul class="navbar-nav ms-auto">
+        <li class="nav-item me-2">
+          <a class="btn btn-outline-light" href="cambiar_contrasena.php">Cambiar contraseña</a>
+        </li>
         <li class="nav-item">
           <a class="btn btn-light text-primary" href="cerrar_sesion.php">Cerrar sesión</a>
         </li>
@@ -55,6 +58,10 @@ $perfil = $stmt->get_result()->fetch_assoc();
       </div>
     </div>
 
+    <?php if (isset($_GET['guardado'])): ?>
+      <div class="alert alert-success text-center">Tus datos se actualizaron correctamente.</div>
+    <?php endif; ?>
+
     <!-- Datos personales -->
     <div class="perfil-card">
       <h5><i class="fas fa-address-card"></i> Datos Personales</h5>
@@ -68,42 +75,10 @@ $perfil = $stmt->get_result()->fetch_assoc();
       </div>
 
       <div class="perfil-item">
-        <i class="fas fa-envelope"></i>
-        <div>
-          <span class="label">Correo</span>
-          <span class="value"><?= htmlspecialchars($perfil['correo_electronico_usuario']) ?></span>
-        </div>
-      </div>
-
-      <div class="perfil-item">
-        <i class="fas fa-location-dot"></i>
-        <div>
-          <span class="label">Dirección</span>
-          <span class="value"><?= htmlspecialchars($perfil['direccion_usuario']) ?></span>
-        </div>
-      </div>
-
-      <div class="perfil-item">
-        <i class="fas fa-phone"></i>
-        <div>
-          <span class="label">Teléfono</span>
-          <span class="value"><?= htmlspecialchars($perfil['telefono_usuario']) ?></span>
-        </div>
-      </div>
-
-      <div class="perfil-item">
         <i class="fas fa-cake-candles"></i>
         <div>
           <span class="label">Fecha de nacimiento</span>
           <span class="value"><?= htmlspecialchars($perfil['fecha_nacimiento'] ?? 'No registrada') ?></span>
-        </div>
-      </div>
-
-      <div class="perfil-item">
-        <i class="fas fa-shield-heart"></i>
-        <div>
-          <span class="label">EPS</span>
-          <span class="value"><?= htmlspecialchars($perfil['eps_paciente'] ?? 'No registrada') ?></span>
         </div>
       </div>
 
@@ -114,6 +89,36 @@ $perfil = $stmt->get_result()->fetch_assoc();
           <span class="value"><?= htmlspecialchars($perfil['sexo'] ?? 'No registrado') ?></span>
         </div>
       </div>
+
+      <p class="text-muted small mt-3 mb-2">Estos datos no se pueden editar aquí. Los siguientes sí:</p>
+
+      <form action="guardar_perfil_paciente.php" method="POST">
+        <div class="mb-3 input-icon-wrapper">
+          <i class="fas fa-envelope fa-icon-left"></i>
+          <input type="email" class="form-control" name="correo_electronico_usuario" required
+            value="<?= htmlspecialchars($perfil['correo_electronico_usuario']) ?>" placeholder="Correo" />
+        </div>
+
+        <div class="mb-3 input-icon-wrapper">
+          <i class="fas fa-location-dot fa-icon-left"></i>
+          <input type="text" class="form-control" name="direccion_usuario" required
+            value="<?= htmlspecialchars($perfil['direccion_usuario']) ?>" placeholder="Dirección" />
+        </div>
+
+        <div class="mb-3 input-icon-wrapper">
+          <i class="fas fa-phone fa-icon-left"></i>
+          <input type="text" class="form-control" name="telefono_usuario" required
+            value="<?= htmlspecialchars($perfil['telefono_usuario']) ?>" placeholder="Teléfono" />
+        </div>
+
+        <div class="mb-3 input-icon-wrapper">
+          <i class="fas fa-shield-heart fa-icon-left"></i>
+          <input type="text" class="form-control" name="eps_paciente" required
+            value="<?= htmlspecialchars($perfil['eps_paciente'] ?? '') ?>" placeholder="EPS" />
+        </div>
+
+        <button type="submit" class="btn custom-register-btn">Guardar cambios</button>
+      </form>
     </div>
 
   </div>

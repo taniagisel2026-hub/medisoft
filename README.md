@@ -45,14 +45,16 @@ No se necesita configurar correo ni ninguna clave externa: la recuperación de c
 
 | Rol | Puede hacer |
 |---|---|
-| **Paciente** | Registrarse, ver su perfil, agendar/cancelar sus propias citas |
-| **Recepcionista** | Registrar pacientes, agendar/cancelar citas a nombre de cualquier paciente, ver todas las citas |
-| **Médico** | Ver su agenda de citas, registrar medicamentos y tratamientos |
-| **Administrador** | Registrar empleados (médicos/recepcionistas/administradores), consultorios y medicamentos |
+| **Paciente** | Registrarse, ver/editar su perfil, agendar/reagendar/cancelar sus propias citas, cambiar su contraseña |
+| **Recepcionista** | Registrar pacientes, agendar/reagendar/cancelar citas a nombre de cualquier paciente, ver todas las citas y el historial clínico de cualquier paciente |
+| **Médico** | Ver su agenda, marcar citas como atendidas (con diagnóstico, notas, medicamentos recetados y tratamientos aplicados), gestionar el catálogo de medicamentos/tratamientos |
+| **Administrador** | Registrar y editar empleados (médicos/recepcionistas/administradores), activar/desactivar usuarios, gestionar consultorios e inventario de medicamentos, ver estadísticas del sistema |
 
 ## Cómo funciona el agendamiento de citas
 
-Cada médico tiene un horario semanal (`horario_medico`: días y rango de horas). Al agendar, el sistema calcula en tiempo real los horarios libres restando las citas ya reservadas de ese médico ese día, y bloquea a nivel de base de datos (`UNIQUE KEY`) que dos citas queden en el mismo horario con el mismo médico.
+Cada médico tiene un horario semanal (`horario_medico`: días y rango de horas) y un **consultorio fijo asignado**. Al agendar, el sistema calcula en tiempo real los horarios libres restando las citas ya reservadas de ese médico ese día, bloquea a nivel de base de datos (`UNIQUE KEY`) que dos citas queden en el mismo horario con el mismo médico, y asigna automáticamente el consultorio del médico a la cita — así el paciente siempre sabe a qué consultorio ir.
+
+Al marcar una cita como atendida, el médico puede recetar medicamentos del inventario (se descuenta el stock automáticamente) y registrar tratamientos aplicados; todo queda visible en el historial clínico del paciente.
 
 ## Seguridad
 

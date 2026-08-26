@@ -8,6 +8,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 $idMedico = filter_input(INPUT_GET, 'id_medico', FILTER_VALIDATE_INT);
 $fecha = $_GET['fecha'] ?? '';
+$excluirCita = filter_input(INPUT_GET, 'excluir_cita', FILTER_VALIDATE_INT) ?: 0;
 
 $fechaValida = DateTime::createFromFormat('Y-m-d', $fecha);
 $hoy = new DateTime('today');
@@ -26,8 +27,8 @@ $stmtHorario->execute();
 $horarios = $stmtHorario->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmtHorario->close();
 
-$stmtOcupadas = $conexion->prepare("SELECT hora FROM cita WHERE id_medico = ? AND fecha_cita = ? AND estado_cita <> 'cancelada'");
-$stmtOcupadas->bind_param("is", $idMedico, $fecha);
+$stmtOcupadas = $conexion->prepare("SELECT hora FROM cita WHERE id_medico = ? AND fecha_cita = ? AND estado_cita <> 'cancelada' AND id_cita <> ?");
+$stmtOcupadas->bind_param("isi", $idMedico, $fecha, $excluirCita);
 $stmtOcupadas->execute();
 $ocupadas = array_column($stmtOcupadas->get_result()->fetch_all(MYSQLI_ASSOC), 'hora');
 $stmtOcupadas->close();

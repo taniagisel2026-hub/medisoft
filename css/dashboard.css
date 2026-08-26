@@ -69,10 +69,35 @@ h3 {
   max-width: 1300px;
   margin-left: auto;
   margin-right: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
 }
 
-#panelOpciones > [class*="col-"] {
+#panelOpciones.cards-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+#panelOpciones.cards-5 {
+  grid-template-columns: repeat(5, 1fr);
+  max-width: 1700px;
+}
+
+#panelOpciones > [class*="col-"],
+#panelOpciones > .panel-card-col {
   display: flex;
+}
+
+@media (max-width: 900px) {
+  #panelOpciones {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 560px) {
+  #panelOpciones {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 .card {
@@ -134,6 +159,33 @@ h3 {
 
 .btn-custom:hover {
   background-color: #08375f;
+}
+
+.stat-card {
+  text-align: center;
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 8px 24px rgba(10, 76, 132, 0.1);
+}
+
+.stat-card i {
+  color: #0a4c84;
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card .stat-numero {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1c2733;
+  line-height: 1.1;
+}
+
+.stat-card .stat-label {
+  color: #667085;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
 }
 
 .footer {

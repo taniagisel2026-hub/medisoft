@@ -8,36 +8,42 @@ $rol = $_SESSION['rol'];
 
 if ($rol === 'paciente') {
     $stmt = $conexion->prepare("
-        SELECT c.id_cita, c.fecha_cita, c.hora, c.estado_cita, c.motivo,
-               um.nombre_usuario AS medico_nombre, um.apellido_usuario AS medico_apellido, m.especialidad_medico
+        SELECT c.id_cita, c.fecha_cita, c.hora, c.estado_cita, c.motivo, c.diagnostico,
+               um.nombre_usuario AS medico_nombre, um.apellido_usuario AS medico_apellido, m.especialidad_medico,
+               cons.numero AS consultorio_numero, cons.ubicacion AS consultorio_ubicacion
         FROM cita c
         JOIN medico m ON m.id_medico = c.id_medico
         JOIN usuario um ON um.id_usuario = m.id_medico
+        LEFT JOIN consultorio cons ON cons.id_consultorio = c.id_consultorio
         WHERE c.id_paciente = ?
         ORDER BY c.fecha_cita DESC, c.hora DESC
     ");
     $stmt->bind_param("i", $_SESSION['id']);
 } elseif ($rol === 'medico') {
     $stmt = $conexion->prepare("
-        SELECT c.id_cita, c.fecha_cita, c.hora, c.estado_cita, c.motivo,
+        SELECT c.id_cita, c.id_paciente, c.fecha_cita, c.hora, c.estado_cita, c.motivo, c.diagnostico,
                up.nombre_usuario AS paciente_nombre, up.apellido_usuario AS paciente_apellido,
-               up.documento_usuario AS paciente_documento
+               up.documento_usuario AS paciente_documento,
+               cons.numero AS consultorio_numero, cons.ubicacion AS consultorio_ubicacion
         FROM cita c
         JOIN usuario up ON up.id_usuario = c.id_paciente
+        LEFT JOIN consultorio cons ON cons.id_consultorio = c.id_consultorio
         WHERE c.id_medico = ?
         ORDER BY c.fecha_cita DESC, c.hora DESC
     ");
     $stmt->bind_param("i", $_SESSION['id']);
 } else { // recepcionista: ve todas
     $stmt = $conexion->prepare("
-        SELECT c.id_cita, c.fecha_cita, c.hora, c.estado_cita, c.motivo,
+        SELECT c.id_cita, c.id_paciente, c.fecha_cita, c.hora, c.estado_cita, c.motivo, c.diagnostico,
                up.nombre_usuario AS paciente_nombre, up.apellido_usuario AS paciente_apellido,
                up.documento_usuario AS paciente_documento,
-               um.nombre_usuario AS medico_nombre, um.apellido_usuario AS medico_apellido, m.especialidad_medico
+               um.nombre_usuario AS medico_nombre, um.apellido_usuario AS medico_apellido, m.especialidad_medico,
+               cons.numero AS consultorio_numero, cons.ubicacion AS consultorio_ubicacion
         FROM cita c
         JOIN usuario up ON up.id_usuario = c.id_paciente
         JOIN medico m ON m.id_medico = c.id_medico
         JOIN usuario um ON um.id_usuario = m.id_medico
+        LEFT JOIN consultorio cons ON cons.id_consultorio = c.id_consultorio
         ORDER BY c.fecha_cita DESC, c.hora DESC
     ");
 }
@@ -60,7 +66,7 @@ $badges = [
   <title>Mis Citas | MEDISOFT</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="../css/dashboard.css?v=9" />
   <style>
     .input-icon-wrapper { position: relative; }
     .input-icon-wrapper i.fa-icon-left {
@@ -109,7 +115,9 @@ $badges = [
               <th>Hora</th>
               <?php if ($rol !== 'paciente'): ?><th>Paciente</th><th>Documento</th><?php endif; ?>
               <?php if ($rol !== 'medico'): ?><th>Médico</th><th>Especialidad</th><?php endif; ?>
+              <th>Consultorio</th>
               <th>Motivo</th>
+              <th>Diagnóstico</th>
               <th>Estado</th>
               <th></th>
             </tr>
@@ -120,21 +128,31 @@ $badges = [
                 <td><?= htmlspecialchars($c['fecha_cita']) ?></td>
                 <td><?= substr(htmlspecialchars($c['hora']), 0, 5) ?></td>
                 <?php if ($rol !== 'paciente'): ?>
-                  <td><?= htmlspecialchars($c['paciente_nombre'] . ' ' . $c['paciente_apellido']) ?></td>
+                  <td>
+                    <?= htmlspecialchars($c['paciente_nombre'] . ' ' . $c['paciente_apellido']) ?>
+                    <a href="historial_paciente.php?id_paciente=<?= (int) $c['id_paciente'] ?>" class="d-block small">Ver historial</a>
+                  </td>
                   <td><?= htmlspecialchars($c['paciente_documento']) ?></td>
                 <?php endif; ?>
                 <?php if ($rol !== 'medico'): ?>
                   <td><?= htmlspecialchars($c['medico_nombre'] . ' ' . $c['medico_apellido']) ?></td>
                   <td><?= htmlspecialchars($c['especialidad_medico']) ?></td>
                 <?php endif; ?>
+                <td><?= $c['consultorio_numero'] ? htmlspecialchars($c['consultorio_numero'] . ' - ' . $c['consultorio_ubicacion']) : 'Por asignar' ?></td>
                 <td><?= htmlspecialchars($c['motivo'] ?? '—') ?></td>
+                <td><?= htmlspecialchars($c['diagnostico'] ?? '—') ?></td>
                 <td><span class="badge <?= $badges[$c['estado_cita']] ?>"><?= ucfirst($c['estado_cita']) ?></span></td>
                 <td>
-                  <?php if ($c['estado_cita'] === 'pendiente' && $rol !== 'medico'): ?>
-                    <form action="cancelar_cita.php" method="POST" onsubmit="return confirm('¿Cancelar esta cita?');">
-                      <input type="hidden" name="id_cita" value="<?= (int) $c['id_cita'] ?>">
-                      <button type="submit" class="btn btn-sm btn-outline-danger">Cancelar</button>
-                    </form>
+                  <?php if ($c['estado_cita'] === 'pendiente' && $rol === 'medico'): ?>
+                    <a href="atender_cita.php?id_cita=<?= (int) $c['id_cita'] ?>" class="btn btn-sm btn-outline-success">Marcar como atendida</a>
+                  <?php elseif ($c['estado_cita'] === 'pendiente' && $rol !== 'medico'): ?>
+                    <div class="d-flex gap-1">
+                      <a href="reagendar_cita.php?id_cita=<?= (int) $c['id_cita'] ?>" class="btn btn-sm btn-outline-primary">Reagendar</a>
+                      <form action="cancelar_cita.php" method="POST" onsubmit="return confirm('¿Cancelar esta cita?');">
+                        <input type="hidden" name="id_cita" value="<?= (int) $c['id_cita'] ?>">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Cancelar</button>
+                      </form>
+                    </div>
                   <?php endif; ?>
                 </td>
               </tr>

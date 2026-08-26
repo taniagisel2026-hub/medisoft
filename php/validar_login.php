@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Buscar usuario
     $sql = $conexion->prepare("
-        SELECT id_usuario, nombre_usuario, contrasena_usuario, rol_usuario
+        SELECT id_usuario, nombre_usuario, contrasena_usuario, rol_usuario, activo
         FROM usuario
         WHERE tipo_documento_usuario = ? AND documento_usuario = ?
     ");
@@ -23,6 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $usuario = $resultado->fetch_assoc();
         $hashBD = $usuario['contrasena_usuario'];
+
+        if (!$usuario['activo']) {
+            echo "<script>
+                alert('❌ Esta cuenta está desactivada. Contacta al administrador.');
+                window.location.href='../login.html';
+            </script>";
+            exit();
+        }
 
         if (password_verify($passIngresada, $hashBD)) {
 

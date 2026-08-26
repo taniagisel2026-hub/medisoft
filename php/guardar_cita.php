@@ -54,9 +54,16 @@ if ($stmtHorario->get_result()->num_rows === 0) {
     exit();
 }
 
+// El consultorio es el que tiene asignado fijo el médico
+$stmtConsultorio = $conexion->prepare("SELECT id_consultorio FROM medico WHERE id_medico = ?");
+$stmtConsultorio->bind_param("i", $idMedico);
+$stmtConsultorio->execute();
+$consultorioFila = $stmtConsultorio->get_result()->fetch_assoc();
+$idConsultorio = $consultorioFila['id_consultorio'] ?? null;
+
 try {
-    $stmt = $conexion->prepare("INSERT INTO cita (id_paciente, id_medico, fecha_cita, hora, estado_cita, motivo) VALUES (?, ?, ?, ?, 'pendiente', ?)");
-    $stmt->bind_param("iisss", $idPaciente, $idMedico, $fecha, $hora, $motivo);
+    $stmt = $conexion->prepare("INSERT INTO cita (id_paciente, id_medico, id_consultorio, fecha_cita, hora, estado_cita, motivo) VALUES (?, ?, ?, ?, ?, 'pendiente', ?)");
+    $stmt->bind_param("iiisss", $idPaciente, $idMedico, $idConsultorio, $fecha, $hora, $motivo);
     $stmt->execute();
 } catch (mysqli_sql_exception $e) {
     if ($conexion->errno === 1062) { // duplicado por el UNIQUE KEY (id_medico, fecha_cita, hora)

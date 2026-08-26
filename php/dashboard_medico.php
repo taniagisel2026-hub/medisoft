@@ -1,13 +1,17 @@
 <?php
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: 0");
+
 session_start();
 
 if (!isset($_SESSION['id'])) {
-    header("Location: login.html");
+    header("Location: ../login.html");
     exit();
 }
 
 if ($_SESSION['rol'] !== 'medico') {
-    echo "<script>alert('❌ No tienes permisos para acceder aquí'); window.location.href='index.html';</script>";
+    header("Location: ../index.html");
     exit();
 }
 ?>
@@ -20,7 +24,7 @@ if ($_SESSION['rol'] !== 'medico') {
   <title>Dashboard Médico | MEDISOFT</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/dashboard.css?v=5">
+  <link rel="stylesheet" href="../css/dashboard.css?v=9">
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-custom">
@@ -30,6 +34,9 @@ if ($_SESSION['rol'] !== 'medico') {
         <img src="../imagenes/letra medisoft.png" class="brand-text d-none d-sm-block" alt="Medisoft">
       </a>
       <ul class="navbar-nav ms-auto">
+        <li class="nav-item me-2">
+          <a class="btn btn-outline-light" href="cambiar_contrasena.php">Cambiar contraseña</a>
+        </li>
         <li class="nav-item">
           <a class="btn btn-light text-primary" href="#" id="logout">Cerrar sesión</a>
         </li>
@@ -57,6 +64,6 @@ if ($_SESSION['rol'] !== 'medico') {
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
-  <script src="../js/dashboard_medico.js"></script>
+  <script src="../js/dashboard_medico.js?v=3"></script>
 </body>
 </html>
