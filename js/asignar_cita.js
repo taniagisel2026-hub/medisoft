@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
   fechaInput.min = hoy;
 
   especialidadSelect.addEventListener("change", function () {
-    const especialidad = this.value;
-    const disponibles = MEDICOS.filter(m => m.especialidad_medico === especialidad);
+    const especialidad = this.value.trim().toLowerCase();
+    const disponibles = MEDICOS.filter(m => m.especialidad_medico.trim().toLowerCase() === especialidad);
 
     medicoSelect.innerHTML = '<option selected disabled value="">Selecciona el médico</option>';
     disponibles.forEach(m => {
@@ -107,6 +107,12 @@ document.addEventListener("DOMContentLoaded", function () {
             resultado.className = "mb-3 small text-danger";
             resultado.textContent = "❌ No se encontró ningún paciente con ese documento.";
           }
+        })
+        .catch(() => {
+          idPacienteInput.value = "";
+          resultado.style.display = "block";
+          resultado.className = "mb-3 small text-danger";
+          resultado.textContent = "❌ Ocurrió un error buscando el paciente. Intenta de nuevo o vuelve a iniciar sesión.";
         });
     });
   }

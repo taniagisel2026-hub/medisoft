@@ -115,7 +115,7 @@ $esRecepcionista = $_SESSION['rol'] === 'recepcionista';
     const MEDICOS = <?= json_encode($medicos) ?>;
     const ES_RECEPCIONISTA = <?= json_encode($esRecepcionista) ?>;
   </script>
-  <script src="../js/asignar_cita.js?v=2"></script>
+  <script src="../js/asignar_cita.js?v=4"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
 </body>
 

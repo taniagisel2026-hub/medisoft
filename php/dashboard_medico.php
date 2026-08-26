@@ -20,7 +20,7 @@ if ($_SESSION['rol'] !== 'medico') {
   <title>Dashboard Médico | MEDISOFT</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/dashboard.css?v=4">
+  <link rel="stylesheet" href="../css/dashboard.css?v=5">
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-custom">

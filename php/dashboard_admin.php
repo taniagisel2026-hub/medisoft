@@ -24,7 +24,7 @@ if ($_SESSION['rol'] !== 'admin') {
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
 
   <!-- CSS personalizado -->
-  <link rel="stylesheet" href="../css/dashboard.css?v=4" />
+  <link rel="stylesheet" href="../css/dashboard.css?v=5" />
 </head>
 <body>
   <!-- Navbar -->
@@ -67,6 +67,6 @@ if ($_SESSION['rol'] !== 'admin') {
 
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
-  <script src="../js/dashboard_admin.js"></script>
+  <script src="../js/dashboard_admin.js?v=2"></script>
 </body>
 </html>
